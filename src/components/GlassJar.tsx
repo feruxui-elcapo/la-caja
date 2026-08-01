@@ -130,21 +130,22 @@ export const GlassJar: React.FC<GlassJarProps> = ({ jar, spentAmount, onDeductCl
         onClick={() => { soundFX.playClick(); onDeductClick(jar); }}
         className="btn-pixel"
         style={{
-          backgroundColor: '#EF4444',
+          background: 'linear-gradient(135deg, #EF4444 0%, #DC2626 100%)',
           color: '#FFFFFF',
-          padding: '8px 14px',
-          borderRadius: '10px',
-          marginTop: '12px',
+          padding: '10px 14px',
+          borderRadius: '12px',
+          marginTop: '16px',
           display: 'inline-flex',
           alignItems: 'center',
-          gap: '4px',
-          fontSize: '10px',
+          gap: '6px',
+          fontSize: '11px',
           width: '100%',
-          justifyContent: 'center'
+          justifyContent: 'center',
+          boxShadow: '0 4px 14px rgba(239, 68, 68, 0.4)'
         }}
       >
-        <Minus size={12} strokeWidth={3} />
-        <span>GASTO</span>
+        <Minus size={14} strokeWidth={3} />
+        <span>- GASTO</span>
       </button>
     </div>
   );

@@ -118,14 +118,14 @@ export const addExpense = async (
   const monthKey = getCurrentMonthKey();
   const date = new Date().toISOString();
   await addDoc(EXPENSES_COLLECTION, {
-    description,
-    amount: Number(amount),
-    jarId,
-    jarName,
+    description: (description || 'Gasto').trim(),
+    amount: Math.abs(Number(amount)) || 0,
+    jarId: String(jarId || ''),
+    jarName: String(jarName || 'Frasco'),
     date,
     monthKey,
-    userEmail,
-    userName
+    userEmail: String(userEmail || 'usuario'),
+    userName: String(userName || 'Usuario')
   });
 };
 

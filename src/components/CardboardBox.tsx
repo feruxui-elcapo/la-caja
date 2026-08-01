@@ -50,7 +50,9 @@ export const CardboardBox: React.FC<CardboardBoxProps> = ({
           justifyContent: 'center',
           alignItems: 'flex-end',
           width: '100%',
-          maxWidth: '340px'
+          maxWidth: '380px',
+          gap: '24px',
+          padding: '0 8px'
         }}
       >
         {jars.map((jar) => (

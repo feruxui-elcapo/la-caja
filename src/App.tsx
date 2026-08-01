@@ -249,7 +249,7 @@ export const App: React.FC = () => {
                       </p>
                     </div>
 
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
                       <span style={{ fontFamily: "'Press Start 2P', monospace", fontSize: '10px', color: '#EF4444' }}>
                         -{fmt(exp.amount)}
                       </span>
@@ -260,9 +260,21 @@ export const App: React.FC = () => {
                             await deleteExpense(exp.id);
                           }
                         }}
-                        style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.3)', cursor: 'pointer', padding: '4px' }}
+                        style={{
+                          background: 'rgba(239, 68, 68, 0.1)',
+                          border: '1px solid rgba(239, 68, 68, 0.25)',
+                          borderRadius: '8px',
+                          color: '#F87171',
+                          cursor: 'pointer',
+                          padding: '6px 8px',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          transition: 'all 0.15s ease'
+                        }}
+                        title="Eliminar gasto"
                       >
-                        <Trash2 size={14} />
+                        <Trash2 size={15} />
                       </button>
                     </div>
                   </div>
@@ -275,33 +287,46 @@ export const App: React.FC = () => {
         {/* TAB 3: PERFIL & AJUSTES */}
         {activeTab === 'profile' && (
           <div>
-            <h2 style={{ fontFamily: "'Press Start 2P', monospace", fontSize: '12px', color: '#F59E0B', marginBottom: '20px', textAlign: 'center' }}>
+            <h2 style={{ fontFamily: "'Press Start 2P', monospace", fontSize: '12px', color: '#F59E0B', marginBottom: '24px', textAlign: 'center' }}>
               MI PERFIL Y AJUSTES
             </h2>
 
             {/* Active User Card */}
-            <div style={{ backgroundColor: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '16px', padding: '16px', display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '20px' }}>
+            <div style={{ backgroundColor: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '16px', padding: '18px', display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '24px' }}>
               {user.photoURL ? (
-                <img src={user.photoURL} alt="" style={{ width: '44px', height: '44px', borderRadius: '50%', border: '2px solid #F59E0B' }} />
+                <img src={user.photoURL} alt="" style={{ width: '48px', height: '48px', borderRadius: '50%', border: '2px solid #F59E0B' }} />
               ) : (
-                <div style={{ width: '44px', height: '44px', borderRadius: '50%', backgroundColor: '#5c3e1e', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <UserIcon size={20} color="#F59E0B" />
+                <div style={{ width: '48px', height: '48px', borderRadius: '50%', backgroundColor: '#5c3e1e', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <UserIcon size={22} color="#F59E0B" />
                 </div>
               )}
               <div style={{ flex: 1, minWidth: 0 }}>
-                <p style={{ fontFamily: "'Press Start 2P', monospace", fontSize: '10px', color: '#fff', truncate: 'ellipsis' }}>
+                <p style={{ fontFamily: "'Press Start 2P', monospace", fontSize: '10px', color: '#fff', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                   {user.displayName || user.email?.split('@')[0]}
                 </p>
-                <p style={{ fontFamily: "'Pixelify Sans', monospace", fontSize: '12px', color: 'rgba(255,255,255,0.5)', marginTop: '2px' }}>
+                <p style={{ fontFamily: "'Pixelify Sans', monospace", fontSize: '13px', color: 'rgba(255,255,255,0.5)', marginTop: '4px' }}>
                   {user.email}
                 </p>
               </div>
               <button
                 onClick={() => { soundFX.playClick(); logout(); }}
-                style={{ background: 'none', border: 'none', color: '#EF4444', cursor: 'pointer', padding: '6px' }}
+                style={{
+                  background: 'rgba(239, 68, 68, 0.12)',
+                  border: '1px solid rgba(239, 68, 68, 0.3)',
+                  borderRadius: '10px',
+                  color: '#EF4444',
+                  cursor: 'pointer',
+                  padding: '8px 12px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  fontSize: '11px',
+                  fontFamily: "'Pixelify Sans', monospace"
+                }}
                 title="Cerrar Sesión"
               >
-                <LogOut size={18} />
+                <LogOut size={16} />
+                <span>Salir</span>
               </button>
             </div>
 
@@ -315,36 +340,36 @@ export const App: React.FC = () => {
                   setDeferredPrompt(null);
                 }}
                 className="btn-pixel"
-                style={{ width: '100%', backgroundColor: '#10B981', color: '#fff', padding: '12px', borderRadius: '12px', marginBottom: '20px', display: 'flex', itemsAlign: 'center', justifyContent: 'center', gap: '8px' }}
+                style={{ width: '100%', backgroundColor: '#10B981', color: '#fff', padding: '14px', borderRadius: '14px', marginBottom: '24px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px' }}
               >
-                <Download size={16} />
+                <Download size={18} />
                 <span>INSTALAR APP EN CELULAR</span>
               </button>
             )}
 
             {saveSuccess && (
-              <div style={{ backgroundColor: 'rgba(16,185,129,0.15)', border: '1px solid #10B981', color: '#10B981', borderRadius: '12px', padding: '10px', fontSize: '12px', fontFamily: "'Pixelify Sans', monospace", display: 'flex', itemsAlign: 'center', gap: '6px', marginBottom: '16px' }}>
-                <CheckCircle2 size={16} />
+              <div style={{ backgroundColor: 'rgba(16,185,129,0.15)', border: '1px solid #10B981', color: '#10B981', borderRadius: '12px', padding: '12px 14px', fontSize: '13px', fontFamily: "'Pixelify Sans', monospace", display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '20px' }}>
+                <CheckCircle2 size={18} />
                 <span>Configuración guardada exitosamente.</span>
               </div>
             )}
 
             {/* Profile Settings Form */}
-            <form onSubmit={handleProfileSave} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+            <form onSubmit={handleProfileSave} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
               <div>
-                <label style={{ display: 'block', fontFamily: "'Press Start 2P', monospace", fontSize: '8px', color: 'rgba(255,255,255,0.6)', marginBottom: '6px' }}>
+                <label style={{ display: 'block', fontFamily: "'Press Start 2P', monospace", fontSize: '8px', color: 'rgba(255,255,255,0.6)', marginBottom: '8px' }}>
                   PRESUPUESTO TOTAL MENSUAL ($)
                 </label>
                 <input
                   type="number"
                   value={totalBudget}
                   onChange={(e) => setTotalBudget(Number(e.target.value))}
-                  style={{ width: '100%', padding: '12px', backgroundColor: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px', color: '#FBBF24', fontFamily: "'Press Start 2P', monospace", fontSize: '14px', outline: 'none' }}
+                  style={{ width: '100%', padding: '14px', backgroundColor: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.12)', borderRadius: '14px', color: '#FBBF24', fontFamily: "'Press Start 2P', monospace", fontSize: '14px', outline: 'none' }}
                 />
               </div>
 
               <div>
-                <label style={{ display: 'block', fontFamily: "'Press Start 2P', monospace", fontSize: '8px', color: 'rgba(255,255,255,0.6)', marginBottom: '6px' }}>
+                <label style={{ display: 'block', fontFamily: "'Press Start 2P', monospace", fontSize: '8px', color: 'rgba(255,255,255,0.6)', marginBottom: '8px' }}>
                   SEGUNDO EMAIL AUTORIZADO
                 </label>
                 <input
@@ -352,16 +377,27 @@ export const App: React.FC = () => {
                   placeholder="ej: parejacompartida@gmail.com"
                   value={secondaryEmail}
                   onChange={(e) => setSecondaryEmail(e.target.value)}
-                  style={{ width: '100%', padding: '12px', backgroundColor: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px', color: '#fff', fontFamily: "'Pixelify Sans', monospace", fontSize: '14px', outline: 'none' }}
+                  style={{ width: '100%', padding: '14px', backgroundColor: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.12)', borderRadius: '14px', color: '#fff', fontFamily: "'Pixelify Sans', monospace", fontSize: '15px', outline: 'none' }}
                 />
               </div>
 
               <button
                 type="submit"
                 className="btn-pixel"
-                style={{ backgroundColor: '#F59E0B', color: '#000', padding: '12px', borderRadius: '12px', marginTop: '8px', display: 'flex', itemsAlign: 'center', justifyContent: 'center', gap: '6px' }}
+                style={{
+                  background: 'linear-gradient(135deg, #F59E0B 0%, #D97706 100%)',
+                  color: '#000',
+                  padding: '14px 20px',
+                  borderRadius: '14px',
+                  marginTop: '8px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '8px',
+                  boxShadow: '0 4px 14px rgba(245, 158, 11, 0.35)'
+                }}
               >
-                <Save size={16} />
+                <Save size={18} />
                 <span>GUARDAR CAMBIOS</span>
               </button>
             </form>
