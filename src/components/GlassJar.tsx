@@ -60,7 +60,7 @@ export const GlassJar: React.FC<GlassJarProps> = ({ jar, spentAmount, onDeductCl
                 left: 0,
                 right: 0,
                 display: 'flex',
-                justify.content: 'space-around',
+                justifyContent: 'space-around',
                 fontSize: '10px',
                 pointerEvents: 'none',
                 opacity: 0.9
