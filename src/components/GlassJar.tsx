@@ -1,6 +1,6 @@
 import React from 'react';
 import type { Jar } from '../types';
-import { Minus } from 'lucide-react';
+import { Minus, Coffee, Heart, Package } from 'lucide-react';
 import { soundFX } from '../utils/audio';
 
 interface GlassJarProps {
@@ -17,53 +17,53 @@ export const GlassJar: React.FC<GlassJarProps> = ({ jar, spentAmount, onDeductCl
 
   // Chibi expression based on coins remaining
   let chibi = '◠‿◠';
-  let chibiColor = '#F59E0B'; // Gold
+  let chibiColor = 'text-amber-400 bg-amber-400/10 border-amber-400/30';
   if (pct < 20) {
     chibi = '> ﹏ <';
-    chibiColor = '#EF4444'; // Red
+    chibiColor = 'text-red-400 bg-red-400/10 border-red-400/30';
   } else if (pct < 50) {
     chibi = '• ɷ •';
-    chibiColor = '#FBBF24'; // Yellow
+    chibiColor = 'text-yellow-400 bg-yellow-400/10 border-yellow-400/30';
   }
 
   const fmt = (n: number) =>
     new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS', maximumFractionDigits: 0 }).format(n);
 
+  const getIcon = () => {
+    if (jar.name.toLowerCase().includes('salida')) return <Coffee size={14} className="text-amber-300" />;
+    if (jar.name.toLowerCase().includes('salud')) return <Heart size={14} className="text-emerald-300" />;
+    return <Package size={14} className="text-blue-300" />;
+  };
+
   return (
     <div className="jar-outer-compact">
-      {/* Chibi Expression */}
+      {/* Chibi Expression Badge */}
       <div 
-        style={{ 
-          fontFamily: "'Press Start 2P', monospace", 
-          fontSize: '13px', 
-          color: chibiColor, 
-          marginBottom: '8px',
-          userSelect: 'none'
-        }}
+        className={`font-pixel text-[13px] font-bold px-3 py-1 rounded-full border mb-3 shadow-sm transition-all duration-300 ${chibiColor}`}
       >
         ({chibi})
       </div>
 
-      {/* Glass Jar Body with Stacked Gold Coins */}
+      {/* Glass Jar Container */}
       <div className="jar-lid-compact" />
       <div className="jar-neck-compact" />
       <div className="jar-body-compact">
-        {/* Stacked Gold Coins Fill */}
+        {/* Coins Fill */}
         <div className="jar-coins-fill" style={{ height: `${pct}%` }}>
           <div className="jar-coins-texture" />
-          {/* Animated 8-bit Coin Particles */}
-          {pct > 5 && (
+          {pct > 8 && (
             <div 
               style={{
                 position: 'absolute',
-                top: '4px',
+                top: '6px',
                 left: 0,
                 right: 0,
                 display: 'flex',
                 justifyContent: 'space-around',
-                fontSize: '10px',
+                fontSize: '11px',
                 pointerEvents: 'none',
-                opacity: 0.9
+                opacity: 0.9,
+                filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.4))'
               }}
             >
               🪙 🪙
@@ -71,7 +71,7 @@ export const GlassJar: React.FC<GlassJarProps> = ({ jar, spentAmount, onDeductCl
           )}
         </div>
 
-        {/* Jar Label Text */}
+        {/* Jar Content Overlay */}
         <div 
           style={{
             position: 'absolute',
@@ -81,44 +81,31 @@ export const GlassJar: React.FC<GlassJarProps> = ({ jar, spentAmount, onDeductCl
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
-            padding: '8px',
+            padding: '10px',
             textAlign: 'center',
             pointerEvents: 'none'
           }}
         >
-          <span 
-            style={{ 
-              fontFamily: "'Press Start 2P', monospace", 
-              fontSize: '9px', 
-              color: '#FFFFFF', 
-              textShadow: '0 2px 4px rgba(0,0,0,0.95)',
-              textTransform: 'uppercase',
-              marginBottom: '6px'
-            }}
-          >
-            {jar.name}
-          </span>
+          <div className="flex items-center gap-1.5 mb-1 bg-black/40 backdrop-blur-md px-2.5 py-0.5 rounded-full border border-white/10">
+            {getIcon()}
+            <span 
+              className="font-sans font-bold text-[11px] text-white tracking-wide uppercase"
+              style={{ textShadow: '0 2px 4px rgba(0,0,0,0.9)' }}
+            >
+              {jar.name}
+            </span>
+          </div>
           
           <span 
-            style={{ 
-              fontFamily: "'Press Start 2P', monospace", 
-              fontSize: '12px', 
-              fontWeight: 900,
-              color: '#FEF08A', 
-              textShadow: '0 2px 6px rgba(0,0,0,0.95)'
-            }}
+            className="font-sans font-extrabold text-base text-yellow-200 mt-1"
+            style={{ textShadow: '0 2px 8px rgba(0,0,0,0.95)' }}
           >
             {fmt(remaining)}
           </span>
 
           <span 
-            style={{ 
-              fontFamily: "'Pixelify Sans', 'VT323', monospace", 
-              fontSize: '11px', 
-              color: 'rgba(255,255,255,0.75)', 
-              textShadow: '0 1px 3px rgba(0,0,0,0.9)',
-              marginTop: '2px'
-            }}
+            className="font-sans text-[11px] text-white/70 mt-0.5"
+            style={{ textShadow: '0 1px 3px rgba(0,0,0,0.9)' }}
           >
             de {fmt(jar.allocatedBudget)}
           </span>
@@ -128,21 +115,7 @@ export const GlassJar: React.FC<GlassJarProps> = ({ jar, spentAmount, onDeductCl
       {/* Deduct Button */}
       <button
         onClick={() => { soundFX.playClick(); onDeductClick(jar); }}
-        className="btn-pixel"
-        style={{
-          background: 'linear-gradient(135deg, #EF4444 0%, #DC2626 100%)',
-          color: '#FFFFFF',
-          padding: '10px 14px',
-          borderRadius: '12px',
-          marginTop: '16px',
-          display: 'inline-flex',
-          alignItems: 'center',
-          gap: '6px',
-          fontSize: '11px',
-          width: '100%',
-          justifyContent: 'center',
-          boxShadow: '0 4px 14px rgba(239, 68, 68, 0.4)'
-        }}
+        className="w-full mt-4 py-3 px-3 rounded-2xl font-sans font-bold text-xs text-white bg-gradient-to-r from-red-500 via-rose-600 to-red-600 hover:from-red-400 hover:to-rose-500 shadow-[0_4px_16px_rgba(239,68,68,0.35)] transition-all scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-1.5"
       >
         <Minus size={14} strokeWidth={3} />
         <span>- GASTO</span>

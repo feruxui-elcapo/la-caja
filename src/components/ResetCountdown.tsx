@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Clock } from 'lucide-react';
 
 export const ResetCountdown: React.FC = () => {
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
@@ -24,30 +25,20 @@ export const ResetCountdown: React.FC = () => {
   const pad = (n: number) => String(n).padStart(2, '0');
 
   return (
-    <div style={{ textAlign: 'center', marginBottom: '28px' }}>
-      <p style={{ fontFamily: "'Pixelify Sans', 'VT323', monospace", fontSize: '13px', color: 'rgba(255,255,255,0.4)', marginBottom: '6px' }}>
-        El presupuesto se renueva el 1° de cada mes en:
+    <div className="text-center mb-6">
+      <p className="font-sans text-xs text-stone-400 mb-2 flex items-center justify-center gap-1.5">
+        <Clock size={13} className="text-amber-400/80" />
+        <span>Renovación el 1° de cada mes en:</span>
       </p>
       <div 
-        style={{
-          display: 'inline-flex',
-          alignItems: 'center',
-          gap: '6px',
-          fontFamily: "'Press Start 2P', monospace",
-          fontSize: '13px',
-          color: '#F59E0B',
-          backgroundColor: 'rgba(245, 158, 11, 0.1)',
-          border: '1px solid rgba(245, 158, 11, 0.3)',
-          padding: '6px 14px',
-          borderRadius: '20px'
-        }}
+        className="inline-flex items-center gap-2 font-sans font-bold text-sm text-amber-300 bg-amber-500/10 border border-amber-500/25 px-4 py-1.5 rounded-full shadow-[0_0_15px_rgba(245,158,11,0.15)]"
       >
         <span>{timeLeft.days}d</span>
-        <span style={{ opacity: 0.5 }}>:</span>
+        <span className="opacity-40">:</span>
         <span>{pad(timeLeft.hours)}h</span>
-        <span style={{ opacity: 0.5 }}>:</span>
+        <span className="opacity-40">:</span>
         <span>{pad(timeLeft.minutes)}m</span>
-        <span style={{ opacity: 0.5 }}>:</span>
+        <span className="opacity-40">:</span>
         <span>{pad(timeLeft.seconds)}s</span>
       </div>
     </div>

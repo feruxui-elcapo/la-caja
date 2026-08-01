@@ -19,14 +19,12 @@ import {
   History, 
   User as UserIcon, 
   Trash2, 
-  Plus, 
   Save, 
-  Mail, 
   LogOut, 
   CheckCircle2, 
   Search,
-  DollarSign,
-  Download
+  Download,
+  WifiOff
 } from 'lucide-react';
 import { soundFX } from './utils/audio';
 
@@ -36,7 +34,7 @@ export const App: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
   const [authLoading, setAuthLoading] = useState(true);
 
-  // Firestore App State
+  // Firestore & Local State
   const [config, setConfig] = useState<AppConfig>(DEFAULT_CONFIG);
   const [expenses, setExpenses] = useState<Expense[]>([]);
 
@@ -107,9 +105,9 @@ export const App: React.FC = () => {
 
   if (authLoading) {
     return (
-      <div style={{ minHeight: '100vh', backgroundColor: '#0a0a0a', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <div style={{ fontFamily: "'Press Start 2P', monospace", fontSize: '11px', color: '#F59E0B' }}>
-          CARGANDO LA CAJA...
+      <div className="min-h-screen bg-[#0b0c10] flex items-center justify-center p-4">
+        <div className="font-sans font-bold text-sm text-amber-400 flex items-center gap-2 animate-pulse">
+          Cargando La Caja...
         </div>
       </div>
     );
@@ -130,7 +128,7 @@ export const App: React.FC = () => {
     jarId: string,
     jarName: string
   ) => {
-    await addExpense(
+    return await addExpense(
       description,
       amount,
       jarId,
@@ -155,7 +153,7 @@ export const App: React.FC = () => {
 
     soundFX.playPowerup();
     setSaveSuccess(true);
-    setTimeout(() => setSaveSuccess(false), 2000);
+    setTimeout(() => setSaveSuccess(false), 2500);
   };
 
   const fmt = (n: number) =>
@@ -170,14 +168,14 @@ export const App: React.FC = () => {
   );
 
   return (
-    <div style={{ minHeight: '100vh', backgroundColor: '#0a0a0a', color: '#f5f5f5', display: 'flex', flexDirection: 'column' }}>
+    <div className="min-h-screen bg-[#0b0c10] text-gray-100 flex flex-col font-sans">
       
-      {/* MAIN BODY AREA (NO TOPBAR!) */}
-      <main style={{ flex: 1, maxWidth: '480px', width: '100%', margin: '0 auto', padding: '20px 16px' }}>
+      {/* MAIN CONTAINER */}
+      <main className="flex-1 max-w-[480px] w-full mx-auto px-4 py-6">
 
-        {/* TAB 1: INICIO (2 Jars Side by Side) */}
+        {/* TAB 1: INICIO */}
         {activeTab === 'home' && (
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <div className="flex flex-col items-center">
             <ResetCountdown />
             <CardboardBox
               jars={config.jars || []}
@@ -191,87 +189,55 @@ export const App: React.FC = () => {
         {/* TAB 2: HISTORIAL DE GASTOS */}
         {activeTab === 'history' && (
           <div>
-            <h2 style={{ fontFamily: "'Press Start 2P', monospace", fontSize: '12px', color: '#F59E0B', marginBottom: '16px', textAlign: 'center' }}>
-              HISTORIAL DE GASTOS
+            <h2 className="font-extrabold text-lg text-amber-400 mb-4 text-center tracking-tight">
+              Historial de Gastos
             </h2>
 
             {/* Search Input */}
-            <div style={{ position: 'relative', marginBottom: '16px' }}>
-              <Search size={14} style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: 'rgba(255,255,255,0.4)' }} />
+            <div className="relative mb-4">
+              <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-stone-400" />
               <input
                 type="text"
-                placeholder="Buscar gasto..."
+                placeholder="Buscar gasto por concepto o frasco..."
                 value={historySearch}
                 onChange={(e) => setHistorySearch(e.target.value)}
-                style={{
-                  width: '100%',
-                  paddingLeft: '36px',
-                  paddingRight: '12px',
-                  paddingTop: '10px',
-                  paddingBottom: '10px',
-                  backgroundColor: 'rgba(255,255,255,0.05)',
-                  border: '1px solid rgba(255,255,255,0.1)',
-                  borderRadius: '12px',
-                  color: '#fff',
-                  fontFamily: "'Pixelify Sans', 'VT323', monospace",
-                  fontSize: '14px',
-                  outline: 'none'
-                }}
+                className="w-full pl-10 pr-4 py-3 bg-white/5 border border-white/10 rounded-2xl text-white font-sans text-sm outline-none focus:border-amber-400/50 transition-colors placeholder:text-stone-500"
               />
             </div>
 
             {/* Expenses List */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+            <div className="flex flex-col gap-2.5">
               {filteredExpenses.length === 0 ? (
-                <p style={{ textAlign: 'center', color: 'rgba(255,255,255,0.3)', fontFamily: "'Pixelify Sans', monospace", fontSize: '14px', padding: '40px 0' }}>
+                <div className="text-center text-stone-500 font-sans text-sm py-12 bg-white/3 rounded-2xl border border-white/5">
                   Sin gastos registrados este mes.
-                </p>
+                </div>
               ) : (
                 filteredExpenses.map((exp) => (
                   <div
                     key={exp.id}
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'space-between',
-                      backgroundColor: 'rgba(255,255,255,0.04)',
-                      border: '1px solid rgba(255,255,255,0.08)',
-                      borderRadius: '12px',
-                      padding: '12px 14px'
-                    }}
+                    className="flex items-center justify-between bg-white/5 border border-white/8 hover:border-white/15 rounded-2xl p-4 transition-all"
                   >
-                    <div>
-                      <p style={{ fontFamily: "'Pixelify Sans', monospace", fontSize: '15px', color: '#fff', fontWeight: 'bold' }}>
+                    <div className="min-w-0 flex-1 pr-3">
+                      <p className="font-bold text-sm text-white truncate">
                         {exp.description}
                       </p>
-                      <p style={{ fontFamily: "'Pixelify Sans', monospace", fontSize: '12px', color: 'rgba(255,255,255,0.4)', marginTop: '2px' }}>
-                        {exp.jarName} · {fmtDate(exp.date)}
+                      <p className="text-xs text-stone-400 mt-0.5">
+                        <span className="text-amber-400/90 font-semibold">{exp.jarName}</span> · {fmtDate(exp.date)}
                       </p>
                     </div>
 
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-                      <span style={{ fontFamily: "'Press Start 2P', monospace", fontSize: '10px', color: '#EF4444' }}>
+                    <div className="flex items-center gap-3 shrink-0">
+                      <span className="font-bold text-sm text-red-400">
                         -{fmt(exp.amount)}
                       </span>
                       <button
                         onClick={async () => {
-                          if (confirm('¿Eliminar gasto? El dinero volverá al frasco.')) {
+                          if (confirm('¿Eliminar este gasto? El dinero volverá al frasco.')) {
                             soundFX.playClick();
                             await deleteExpense(exp.id);
                           }
                         }}
-                        style={{
-                          background: 'rgba(239, 68, 68, 0.1)',
-                          border: '1px solid rgba(239, 68, 68, 0.25)',
-                          borderRadius: '8px',
-                          color: '#F87171',
-                          cursor: 'pointer',
-                          padding: '6px 8px',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          transition: 'all 0.15s ease'
-                        }}
+                        className="p-2 rounded-xl bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/20 transition-all"
                         title="Eliminar gasto"
                       >
                         <Trash2 size={15} />
@@ -284,53 +250,41 @@ export const App: React.FC = () => {
           </div>
         )}
 
-        {/* TAB 3: PERFIL & AJUSTES */}
+        {/* TAB 3: PERFIL Y AJUSTES */}
         {activeTab === 'profile' && (
           <div>
-            <h2 style={{ fontFamily: "'Press Start 2P', monospace", fontSize: '12px', color: '#F59E0B', marginBottom: '24px', textAlign: 'center' }}>
-              MI PERFIL Y AJUSTES
+            <h2 className="font-extrabold text-lg text-amber-400 mb-6 text-center tracking-tight">
+              Perfil y Ajustes
             </h2>
 
-            {/* Active User Card */}
-            <div style={{ backgroundColor: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '16px', padding: '18px', display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '24px' }}>
+            {/* User Profile Card */}
+            <div className="bg-white/5 border border-white/10 rounded-3xl p-5 flex items-center gap-4 mb-6">
               {user.photoURL ? (
-                <img src={user.photoURL} alt="" style={{ width: '48px', height: '48px', borderRadius: '50%', border: '2px solid #F59E0B' }} />
+                <img src={user.photoURL} alt="" className="w-12 h-12 rounded-full border-2 border-amber-400" />
               ) : (
-                <div style={{ width: '48px', height: '48px', borderRadius: '50%', backgroundColor: '#5c3e1e', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <UserIcon size={22} color="#F59E0B" />
+                <div className="w-12 h-12 rounded-full bg-amber-500/20 border border-amber-400 flex items-center justify-center text-amber-400 font-bold">
+                  {user.displayName?.[0] || 'U'}
                 </div>
               )}
-              <div style={{ flex: 1, minWidth: 0 }}>
-                <p style={{ fontFamily: "'Press Start 2P', monospace", fontSize: '10px', color: '#fff', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+              <div className="flex-1 min-w-0">
+                <p className="font-bold text-sm text-white truncate">
                   {user.displayName || user.email?.split('@')[0]}
                 </p>
-                <p style={{ fontFamily: "'Pixelify Sans', monospace", fontSize: '13px', color: 'rgba(255,255,255,0.5)', marginTop: '4px' }}>
+                <p className="text-xs text-stone-400 mt-0.5 truncate">
                   {user.email}
                 </p>
               </div>
               <button
                 onClick={() => { soundFX.playClick(); logout(); }}
-                style={{
-                  background: 'rgba(239, 68, 68, 0.12)',
-                  border: '1px solid rgba(239, 68, 68, 0.3)',
-                  borderRadius: '10px',
-                  color: '#EF4444',
-                  cursor: 'pointer',
-                  padding: '8px 12px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '6px',
-                  fontSize: '11px',
-                  fontFamily: "'Pixelify Sans', monospace"
-                }}
+                className="py-2 px-3.5 rounded-xl bg-red-500/12 hover:bg-red-500/20 text-red-400 border border-red-500/30 font-semibold text-xs transition-all flex items-center gap-1.5 shrink-0"
                 title="Cerrar Sesión"
               >
-                <LogOut size={16} />
+                <LogOut size={14} />
                 <span>Salir</span>
               </button>
             </div>
 
-            {/* PWA Install Button inside Profile */}
+            {/* PWA Install Button */}
             {deferredPrompt && (
               <button
                 onClick={async () => {
@@ -339,66 +293,53 @@ export const App: React.FC = () => {
                   await deferredPrompt.userChoice;
                   setDeferredPrompt(null);
                 }}
-                className="btn-pixel"
-                style={{ width: '100%', backgroundColor: '#10B981', color: '#fff', padding: '14px', borderRadius: '14px', marginBottom: '24px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px' }}
+                className="w-full py-4 px-4 bg-emerald-500 hover:bg-emerald-400 text-gray-950 font-bold rounded-2xl mb-6 shadow-[0_4px_20px_rgba(16,185,129,0.3)] transition-all flex items-center justify-center gap-2"
               >
                 <Download size={18} />
-                <span>INSTALAR APP EN CELULAR</span>
+                <span>Instalar App en Celular</span>
               </button>
             )}
 
             {saveSuccess && (
-              <div style={{ backgroundColor: 'rgba(16,185,129,0.15)', border: '1px solid #10B981', color: '#10B981', borderRadius: '12px', padding: '12px 14px', fontSize: '13px', fontFamily: "'Pixelify Sans', monospace", display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '20px' }}>
-                <CheckCircle2 size={18} />
+              <div className="bg-emerald-950/60 border border-emerald-500/30 text-emerald-300 rounded-2xl p-4 text-sm font-semibold flex items-center gap-2.5 mb-5">
+                <CheckCircle2 size={18} className="text-emerald-400" />
                 <span>Configuración guardada exitosamente.</span>
               </div>
             )}
 
             {/* Profile Settings Form */}
-            <form onSubmit={handleProfileSave} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+            <form onSubmit={handleProfileSave} className="flex flex-col gap-5">
               <div>
-                <label style={{ display: 'block', fontFamily: "'Press Start 2P', monospace", fontSize: '8px', color: 'rgba(255,255,255,0.6)', marginBottom: '8px' }}>
-                  PRESUPUESTO TOTAL MENSUAL ($)
+                <label className="block text-xs font-semibold text-stone-400 uppercase tracking-wider mb-2">
+                  Presupuesto Total Mensual ($)
                 </label>
                 <input
                   type="number"
                   value={totalBudget}
                   onChange={(e) => setTotalBudget(Number(e.target.value))}
-                  style={{ width: '100%', padding: '14px', backgroundColor: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.12)', borderRadius: '14px', color: '#FBBF24', fontFamily: "'Press Start 2P', monospace", fontSize: '14px', outline: 'none' }}
+                  className="w-full p-4 bg-white/5 border border-white/12 rounded-2xl text-amber-300 font-extrabold text-xl outline-none focus:border-amber-400 transition-colors"
                 />
               </div>
 
               <div>
-                <label style={{ display: 'block', fontFamily: "'Press Start 2P', monospace", fontSize: '8px', color: 'rgba(255,255,255,0.6)', marginBottom: '8px' }}>
-                  SEGUNDO EMAIL AUTORIZADO
+                <label className="block text-xs font-semibold text-stone-400 uppercase tracking-wider mb-2">
+                  Segundo Email Autorizado
                 </label>
                 <input
                   type="email"
                   placeholder="ej: parejacompartida@gmail.com"
                   value={secondaryEmail}
                   onChange={(e) => setSecondaryEmail(e.target.value)}
-                  style={{ width: '100%', padding: '14px', backgroundColor: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.12)', borderRadius: '14px', color: '#fff', fontFamily: "'Pixelify Sans', monospace", fontSize: '15px', outline: 'none' }}
+                  className="w-full p-4 bg-white/5 border border-white/12 rounded-2xl text-white font-sans text-sm outline-none focus:border-amber-400 transition-colors placeholder:text-stone-500"
                 />
               </div>
 
               <button
                 type="submit"
-                className="btn-pixel"
-                style={{
-                  background: 'linear-gradient(135deg, #F59E0B 0%, #D97706 100%)',
-                  color: '#000',
-                  padding: '14px 20px',
-                  borderRadius: '14px',
-                  marginTop: '8px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: '8px',
-                  boxShadow: '0 4px 14px rgba(245, 158, 11, 0.35)'
-                }}
+                className="w-full py-4 px-6 rounded-2xl font-bold text-gray-950 bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 shadow-[0_4px_20px_rgba(245,158,11,0.35)] transition-all scale-[1.01] active:scale-[0.98] flex items-center justify-center gap-2 mt-2"
               >
                 <Save size={18} />
-                <span>GUARDAR CAMBIOS</span>
+                <span>Guardar Cambios</span>
               </button>
             </form>
           </div>
@@ -406,7 +347,7 @@ export const App: React.FC = () => {
 
       </main>
 
-      {/* MOBILE BOTTOM NAVBAR (TIPO ANDROID) */}
+      {/* MOBILE BOTTOM NAVBAR */}
       <nav className="bottom-navbar">
         <button
           onClick={() => { soundFX.playClick(); setActiveTab('home'); }}
