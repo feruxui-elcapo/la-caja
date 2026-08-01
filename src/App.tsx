@@ -117,7 +117,7 @@ export const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-neutral-950 text-gray-100 flex flex-col selection:bg-amber-500 selection:text-gray-950">
+    <div className="min-h-screen bg-[#0a0a0a] text-gray-100 flex flex-col selection:bg-amber-500 selection:text-gray-950">
       {/* Navbar */}
       <Navbar
         user={user}
@@ -127,23 +127,18 @@ export const App: React.FC = () => {
       />
 
       {/* Main Content Area */}
-      <main className="flex-1 max-w-6xl w-full mx-auto px-4 py-6 md:py-8">
-        {/* Budget Reset Countdown & Month Progress */}
+      <main className="flex-1 max-w-xl w-full mx-auto px-4 py-8 flex flex-col justify-center items-center">
+        {/* Budget Reset Countdown */}
         <ResetCountdown />
 
-        {/* Cardboard Box with Glass Jars */}
+        {/* The 2 Jars (Salidas & Salud) */}
         <CardboardBox
           jars={config.jars || []}
           expenses={expenses}
-          totalBudget={config.totalMonthlyBudget || 1000000}
+          totalBudget={config.totalMonthlyBudget || 300000}
           onDeductClick={handleOpenAddExpense}
         />
       </main>
-
-      {/* Footer */}
-      <footer className="py-6 text-center text-xs text-neutral-600 border-t border-neutral-900">
-        <p>La Caja • Presupuesto compartido mensual • Reinicio el 1° de cada mes</p>
-      </footer>
 
       {/* Modals */}
       <AddExpenseModal

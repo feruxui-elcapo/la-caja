@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import type { Jar } from '../types';
-import { X, Minus, DollarSign, Tag, Archive } from 'lucide-react';
+import { X, Minus } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { soundFX } from '../utils/audio';
 
@@ -13,11 +13,7 @@ interface AddExpenseModalProps {
 }
 
 export const AddExpenseModal: React.FC<AddExpenseModalProps> = ({
-  isOpen,
-  onClose,
-  jars,
-  preselectedJarId,
-  onAddExpense
+  isOpen, onClose, jars, preselectedJarId, onAddExpense
 }) => {
   const [description, setDescription] = useState('');
   const [amount, setAmount] = useState('');
@@ -26,11 +22,8 @@ export const AddExpenseModal: React.FC<AddExpenseModalProps> = ({
   const [error, setError] = useState('');
 
   useEffect(() => {
-    if (preselectedJarId) {
-      setSelectedJarId(preselectedJarId);
-    } else if (jars.length > 0) {
-      setSelectedJarId(jars[0].id);
-    }
+    if (preselectedJarId) setSelectedJarId(preselectedJarId);
+    else if (jars.length > 0) setSelectedJarId(jars[0].id);
   }, [preselectedJarId, jars]);
 
   if (!isOpen) return null;
@@ -38,167 +31,95 @@ export const AddExpenseModal: React.FC<AddExpenseModalProps> = ({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
-
-    const numAmount = parseFloat(amount.replace(/[^0-9.]/g, ''));
-    if (!description.trim()) {
-      setError('Escribí una descripción.');
-      return;
-    }
-
-    if (isNaN(numAmount) || numAmount <= 0) {
-      setError('Ingresá un monto mayor a $0.');
-      return;
-    }
-
-    const selectedJar = jars.find(j => j.id === selectedJarId);
-    if (!selectedJar) {
-      setError('Seleccioná un frasco.');
-      return;
-    }
+    const num = parseFloat(amount.replace(/[^0-9.]/g, ''));
+    if (!description.trim()) { setError('Escribí qué gastaste.'); return; }
+    if (isNaN(num) || num <= 0) { setError('Ingresá un monto válido.'); return; }
+    const jar = jars.find(j => j.id === selectedJarId);
+    if (!jar) { setError('Elegí un frasco.'); return; }
 
     try {
       setLoading(true);
-      await onAddExpense(
-        description.trim(),
-        numAmount,
-        selectedJar.id,
-        selectedJar.name
-      );
-
-      // Play 8-bit sound
+      await onAddExpense(description.trim(), num, jar.id, jar.name);
       soundFX.playCoinDeduct();
-
-      // Confetti burst
-      confetti({
-        particleCount: 30,
-        spread: 70,
-        origin: { y: 0.7 },
-        colors: ['#EF4444', '#F59E0B', '#10B981']
-      });
-
-      setDescription('');
-      setAmount('');
-      setLoading(false);
-      onClose();
-    } catch (err) {
-      console.error(err);
-      setError('Ocurrió un error al guardar.');
-      setLoading(false);
+      confetti({ particleCount: 20, spread: 50, origin: { y: 0.7 }, colors: ['#EF4444', '#F59E0B'] });
+      setDescription(''); setAmount(''); setLoading(false); onClose();
+    } catch {
+      setError('Error al guardar.'); setLoading(false);
     }
   };
 
   return (
-    <div className="pixel-modal-overlay" onClick={onClose}>
-      <div className="pixel-modal-card rounded-2xl" onClick={(e) => e.stopPropagation()}>
+    <div className="modal-bg" onClick={onClose}>
+      <div className="modal-box" onClick={e => e.stopPropagation()}>
         {/* Header */}
-        <div className="flex justify-between items-center mb-6 pb-3 border-b-3 border-black">
-          <div className="flex items-center gap-2.5">
-            <div className="p-2 bg-red-500 border-2 border-black text-white rounded-lg shadow-[2px_2px_0_0_#000]">
-              <Minus size={20} strokeWidth={3} />
-            </div>
-            <div>
-              <h3 className="text-sm md:text-base font-pixel-title text-white">ANOTAR GASTO</h3>
-              <p className="text-[10px] font-pixel-title text-amber-300 mt-1">{"( > ﹏ < )"} Sacar dinero del frasco</p>
-            </div>
+        <div className="flex justify-between items-center mb-6">
+          <div className="flex items-center gap-2">
+            <Minus size={18} className="text-red-500" />
+            <span className="font-pixel text-[0.6rem] text-white">ANOTAR GASTO</span>
           </div>
-          <button 
-            onClick={() => { soundFX.playClick(); onClose(); }}
-            className="p-1.5 text-gray-400 hover:text-white bg-black border-2 border-gray-700 rounded-lg"
-          >
-            <X size={18} />
-          </button>
+          <button onClick={onClose} className="text-white/30 hover:text-white"><X size={18} /></button>
         </div>
 
-        {error && (
-          <div className="mb-4 p-3 bg-red-950 border-2 border-red-500 rounded-xl text-red-300 text-xs font-pixel-title">
-            {error}
-          </div>
-        )}
+        {error && <p className="text-red-400 font-body text-xs mb-4 bg-red-950/50 border border-red-500/30 rounded-lg p-2">{error}</p>}
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          {/* Jar Selector */}
+        <form onSubmit={handleSubmit} className="space-y-5">
+          {/* Jar selector */}
           <div>
-            <label className="block text-[10px] font-pixel-title text-amber-300 uppercase mb-2 flex items-center gap-1.5">
-              <Archive size={14} className="text-amber-400" />
-              <span>FRASCO A DESCONTAR</span>
-            </label>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-48 overflow-y-auto pr-1">
-              {jars.map((jar) => {
-                const isSelected = jar.id === selectedJarId;
-                return (
-                  <button
-                    type="button"
-                    key={jar.id}
-                    onClick={() => { soundFX.playClick(); setSelectedJarId(jar.id); }}
-                    className={`p-3 rounded-xl border-3 text-left transition-all flex items-center gap-2.5 ${
-                      isSelected 
-                        ? 'bg-amber-500 text-black border-black font-pixel-title text-xs shadow-[3px_3px_0_0_#000]' 
-                        : 'bg-black text-gray-300 border-gray-800 hover:border-amber-500 text-xs font-pixel-body'
-                    }`}
-                  >
-                    <div 
-                      className="w-3 h-3 rounded-full shrink-0 border border-black" 
-                      style={{ backgroundColor: jar.color || '#F59E0B' }} 
-                    />
-                    <span className="truncate">{jar.name}</span>
-                  </button>
-                );
-              })}
+            <p className="font-pixel text-[0.5rem] text-white/50 mb-2">FRASCO</p>
+            <div className="flex gap-2">
+              {jars.map(jar => (
+                <button
+                  key={jar.id}
+                  type="button"
+                  onClick={() => { soundFX.playClick(); setSelectedJarId(jar.id); }}
+                  className={`flex-1 py-2.5 px-3 rounded-xl border-2 font-pixel text-[0.5rem] transition-all ${
+                    jar.id === selectedJarId
+                      ? 'bg-amber-500 text-black border-amber-400 shadow-[3px_3px_0_0_#000]'
+                      : 'bg-white/5 text-white/60 border-white/10 hover:border-white/30'
+                  }`}
+                >
+                  {jar.name}
+                </button>
+              ))}
             </div>
           </div>
 
           {/* Description */}
           <div>
-            <label className="block text-[10px] font-pixel-title text-amber-300 uppercase mb-1 flex items-center gap-1.5">
-              <Tag size={14} className="text-amber-400" />
-              <span>DESCRIPCIÓN DEL GASTO</span>
-            </label>
+            <p className="font-pixel text-[0.5rem] text-white/50 mb-2">CONCEPTO</p>
             <input
               type="text"
-              placeholder="Ej: Supermercado, Luz, Taxi"
+              placeholder="Ej: Cena, Médico..."
               value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              className="w-full px-4 py-3 bg-[#000] border-3 border-gray-700 rounded-xl text-white placeholder-gray-600 focus:outline-none focus:border-amber-500 font-pixel-body text-base font-bold"
-              required
+              onChange={e => setDescription(e.target.value)}
+              className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white font-body text-base focus:outline-none focus:border-amber-500"
               autoFocus
             />
           </div>
 
           {/* Amount */}
           <div>
-            <label className="block text-[10px] font-pixel-title text-emerald-400 uppercase mb-1 flex items-center gap-1.5">
-              <DollarSign size={14} className="text-emerald-400" />
-              <span>MONTO ($)</span>
-            </label>
+            <p className="font-pixel text-[0.5rem] text-white/50 mb-2">MONTO</p>
             <div className="relative">
-              <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 font-pixel-title text-sm">$</span>
+              <span className="absolute left-4 top-1/2 -translate-y-1/2 text-white/30 font-pixel text-sm">$</span>
               <input
                 type="number"
                 step="any"
                 placeholder="0"
                 value={amount}
-                onChange={(e) => setAmount(e.target.value)}
-                className="w-full pl-8 pr-4 py-3 bg-[#000] border-3 border-gray-700 rounded-xl text-emerald-300 placeholder-gray-600 focus:outline-none focus:border-emerald-500 font-pixel-title text-lg"
-                required
+                onChange={e => setAmount(e.target.value)}
+                className="w-full pl-9 pr-4 py-3 bg-white/5 border border-white/10 rounded-xl text-emerald-400 font-pixel text-lg focus:outline-none focus:border-amber-500"
               />
             </div>
           </div>
 
           {/* Actions */}
-          <div className="flex gap-3 pt-4 border-t-3 border-black">
-            <button
-              type="button"
-              onClick={onClose}
-              className="btn-pixel bg-gray-800 text-gray-300 py-3 px-4 rounded-xl text-xs flex-1"
-            >
-              CANCELAR
+          <div className="flex gap-3 pt-2">
+            <button type="button" onClick={onClose} className="btn-pixel bg-white/10 text-white/60 py-2.5 px-4 rounded-xl flex-1">
+              Cancelar
             </button>
-            <button
-              type="submit"
-              disabled={loading}
-              className="btn-pixel btn-pixel-red py-3 px-4 rounded-xl text-xs flex-1"
-            >
-              {loading ? 'GUARDANDO...' : '- RESTAR GASTO'}
+            <button type="submit" disabled={loading} className="btn-pixel bg-red-600 text-white py-2.5 px-4 rounded-xl flex-1">
+              {loading ? '...' : '- Restar'}
             </button>
           </div>
         </form>
