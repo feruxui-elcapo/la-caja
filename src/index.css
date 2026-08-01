@@ -24,136 +24,139 @@ html, body {
 .font-pixel { font-family: var(--font-pixel); }
 .font-body { font-family: var(--font-body); }
 
-/* ===== THE JAR - This is the star of the show ===== */
+/* ===== THE JAR - Big, Physical & Beautiful ===== */
 .jar-outer {
   display: flex;
   flex-direction: column;
   align-items: center;
-  transition: transform 0.3s ease;
+  margin: 12px;
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 .jar-outer:hover {
-  transform: scale(1.03);
+  transform: translateY(-8px) scale(1.04);
 }
 
-/* Lid */
+/* Wooden Cork Lid */
 .jar-lid {
-  width: 80px;
-  height: 22px;
-  background: linear-gradient(180deg, #c9a66b 0%, #8B5E34 60%, #6B4423 100%);
-  border: 3px solid #3d2510;
+  width: 90px;
+  height: 24px;
+  background: linear-gradient(180deg, #d4a373 0%, #8B5E34 60%, #5c3e1e 100%);
+  border: 3px solid #1a0f07;
   border-bottom: none;
-  border-radius: 8px 8px 2px 2px;
+  border-radius: 10px 10px 3px 3px;
   position: relative;
   z-index: 3;
-  box-shadow: inset 0 4px 0 rgba(255,255,255,0.25);
+  box-shadow: inset 0 4px 0 rgba(255,255,255,0.3);
 }
 
 /* Jar neck ring */
 .jar-neck {
-  width: 90px;
-  height: 10px;
-  background: rgba(255,255,255,0.25);
-  border: 2px solid rgba(255,255,255,0.5);
-  border-radius: 2px;
+  width: 102px;
+  height: 12px;
+  background: rgba(255,255,255,0.3);
+  border: 2px solid rgba(255,255,255,0.6);
+  border-radius: 3px;
   position: relative;
   z-index: 2;
+  box-shadow: inset 0 2px 4px rgba(255,255,255,0.4);
 }
 
-/* Jar body - the glass */
+/* Jar body - the physical glass container */
 .jar-body {
-  width: 140px;
-  min-height: 260px;
-  background: rgba(255,255,255,0.07);
-  border: 3px solid rgba(255,255,255,0.4);
-  border-top: 2px solid rgba(255,255,255,0.3);
-  border-radius: 12px 12px 32px 32px;
+  width: 160px;
+  height: 280px;
+  background: linear-gradient(135deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.04) 100%);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 3.5px solid rgba(255,255,255,0.55);
+  border-top: 2px solid rgba(255,255,255,0.4);
+  border-radius: 16px 16px 36px 36px;
   position: relative;
   overflow: hidden;
   box-shadow:
-    inset -8px 0 16px rgba(255,255,255,0.06),
-    inset 8px 0 16px rgba(0,0,0,0.15),
-    0 12px 40px rgba(0,0,0,0.5);
+    inset -10px 0 20px rgba(255,255,255,0.1),
+    inset 10px 0 20px rgba(0,0,0,0.3),
+    0 20px 50px rgba(0,0,0,0.7);
 }
 
-/* Glass reflection streak */
+/* Glass reflection streaks */
 .jar-body::before {
   content: '';
   position: absolute;
-  top: 8px;
-  left: 10px;
-  width: 8px;
+  top: 10px;
+  left: 12px;
+  width: 10px;
   height: 75%;
   background: linear-gradient(180deg,
-    rgba(255,255,255,0.35) 0%,
-    rgba(255,255,255,0.08) 60%,
+    rgba(255,255,255,0.5) 0%,
+    rgba(255,255,255,0.1) 60%,
     transparent 100%);
-  border-radius: 4px;
+  border-radius: 6px;
   z-index: 10;
   pointer-events: none;
 }
 
-/* Second subtle reflection */
 .jar-body::after {
   content: '';
   position: absolute;
-  top: 12px;
-  left: 22px;
-  width: 4px;
-  height: 40%;
+  top: 14px;
+  left: 26px;
+  width: 5px;
+  height: 45%;
   background: linear-gradient(180deg,
-    rgba(255,255,255,0.2) 0%,
+    rgba(255,255,255,0.3) 0%,
     transparent 100%);
   border-radius: 3px;
   z-index: 10;
   pointer-events: none;
 }
 
-/* Liquid fill */
+/* Liquid fill inside glass */
 .jar-fill {
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
-  border-radius: 0 0 28px 28px;
+  border-radius: 0 0 32px 32px;
   transition: height 0.8s cubic-bezier(0.4, 0, 0.2, 1);
   overflow: hidden;
 }
 
-/* Liquid surface wave */
+/* Surface wave glow */
 .jar-fill::before {
   content: '';
   position: absolute;
-  top: -6px;
+  top: -8px;
   left: -10%;
   right: -10%;
-  height: 14px;
+  height: 16px;
   border-radius: 50%;
   background: inherit;
-  filter: brightness(1.3);
-  opacity: 0.7;
+  filter: brightness(1.4);
+  opacity: 0.8;
 }
 
-/* Pixel coin pattern floating in the liquid */
+/* Floating coin patterns */
 .jar-coins {
   position: absolute;
   inset: 0;
-  opacity: 0.25;
+  opacity: 0.35;
   background-image:
-    radial-gradient(circle 4px at 30% 30%, rgba(255,255,255,0.6) 0%, transparent 100%),
-    radial-gradient(circle 3px at 65% 55%, rgba(255,255,255,0.5) 0%, transparent 100%),
-    radial-gradient(circle 5px at 45% 75%, rgba(255,255,255,0.4) 0%, transparent 100%);
+    radial-gradient(circle 5px at 30% 30%, rgba(255,255,255,0.7) 0%, transparent 100%),
+    radial-gradient(circle 4px at 70% 55%, rgba(255,255,255,0.6) 0%, transparent 100%),
+    radial-gradient(circle 6px at 45% 75%, rgba(255,255,255,0.5) 0%, transparent 100%);
   animation: floatCoins 3s ease-in-out infinite alternate;
 }
 
 @keyframes floatCoins {
   0% { transform: translateY(0); }
-  100% { transform: translateY(-4px); }
+  100% { transform: translateY(-6px); }
 }
 
 /* ===== SIMPLE PIXEL BUTTON ===== */
 .btn-pixel {
   font-family: var(--font-pixel);
-  font-size: 0.65rem;
+  font-size: 0.7rem;
   border: 3px solid #000;
   box-shadow: 4px 4px 0 0 #000;
   cursor: pointer;
@@ -163,8 +166,8 @@ html, body {
   letter-spacing: 0.5px;
 }
 .btn-pixel:hover {
-  transform: translate(-1px, -1px);
-  box-shadow: 5px 5px 0 0 #000;
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 0 #000;
 }
 .btn-pixel:active {
   transform: translate(2px, 2px);
@@ -175,7 +178,7 @@ html, body {
 .modal-bg {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.8);
+  background: rgba(0,0,0,0.85);
   backdrop-filter: blur(6px);
   z-index: 100;
   display: flex;

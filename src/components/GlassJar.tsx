@@ -30,42 +30,102 @@ export const GlassJar: React.FC<GlassJarProps> = ({ jar, spentAmount, onDeductCl
     new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS', maximumFractionDigits: 0 }).format(n);
 
   return (
-    <div className="jar-outer">
-      {/* Chibi face */}
-      <div className="mb-3 font-pixel text-lg select-none" style={{ color: fillColor }}>
+    <div className="jar-outer" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '16px' }}>
+      {/* Chibi face floating above lid */}
+      <div 
+        style={{ 
+          color: fillColor, 
+          fontFamily: "'Press Start 2P', monospace", 
+          fontSize: '18px', 
+          marginBottom: '12px',
+          userSelect: 'none'
+        }}
+      >
         ({chibi})
       </div>
 
-      {/* Physical Jar */}
+      {/* Physical Glass Jar */}
       <div className="jar-lid" />
       <div className="jar-neck" />
       <div className="jar-body">
-        {/* Liquid fill */}
+        {/* Liquid fill inside glass */}
         <div className="jar-fill" style={{ height: `${pct}%`, backgroundColor: fillColor }}>
           <div className="jar-coins" />
         </div>
 
-        {/* Label centered on the jar */}
-        <div className="absolute inset-0 z-20 flex flex-col items-center justify-center px-3 text-center pointer-events-none">
-          <span className="font-pixel text-[0.55rem] text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)] tracking-wide uppercase mb-2">
+        {/* Text Label on the Glass Jar */}
+        <div 
+          style={{
+            position: 'absolute',
+            inset: 0,
+            zIndex: 20,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '12px',
+            textAlign: 'center',
+            pointerEvents: 'none'
+          }}
+        >
+          <span 
+            style={{ 
+              fontFamily: "'Press Start 2P', monospace", 
+              fontSize: '11px', 
+              color: '#FFFFFF', 
+              textShadow: '0 2px 4px rgba(0,0,0,0.95)',
+              textTransform: 'uppercase',
+              letterSpacing: '1px',
+              marginBottom: '8px'
+            }}
+          >
             {jar.name}
           </span>
-          <span className="font-pixel text-base text-white drop-shadow-[0_2px_6px_rgba(0,0,0,0.95)] leading-tight">
+          
+          <span 
+            style={{ 
+              fontFamily: "'Press Start 2P', monospace", 
+              fontSize: '15px', 
+              fontWeight: 900,
+              color: '#FFFFFF', 
+              textShadow: '0 2px 6px rgba(0,0,0,0.95)'
+            }}
+          >
             {fmt(remaining)}
           </span>
-          <span className="font-body text-xs text-white/60 mt-1 drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)]">
+
+          <span 
+            style={{ 
+              fontFamily: "'Pixelify Sans', 'VT323', monospace", 
+              fontSize: '13px', 
+              color: 'rgba(255,255,255,0.7)', 
+              textShadow: '0 1px 3px rgba(0,0,0,0.9)',
+              marginTop: '4px'
+            }}
+          >
             de {fmt(jar.allocatedBudget)}
           </span>
         </div>
       </div>
 
-      {/* Deduct button directly below jar */}
+      {/* Button directly under the jar */}
       <button
         onClick={() => { soundFX.playClick(); onDeductClick(jar); }}
-        className="btn-pixel bg-red-600 text-white px-5 py-2.5 rounded-xl mt-5 flex items-center gap-2"
+        className="btn-pixel"
+        style={{
+          backgroundColor: '#EF4444',
+          color: '#FFFFFF',
+          padding: '10px 20px',
+          borderRadius: '12px',
+          marginTop: '20px',
+          display: 'inline-flex',
+          alignItems: 'center',
+          gap: '8px',
+          fontSize: '11px'
+        }}
       >
         <Minus size={14} strokeWidth={3} />
-        <span>Gasto</span>
+        <span>- ANOTAR GASTO</span>
       </button>
     </div>
   );

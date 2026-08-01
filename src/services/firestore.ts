@@ -39,12 +39,24 @@ export const subscribeToConfig = (onUpdate: (config: AppConfig) => void) => {
   return onSnapshot(CONFIG_DOC_PATH, (snapshot) => {
     if (snapshot.exists()) {
       const data = snapshot.data() as AppConfig;
-      // Ensure allowedEmails includes primary user
       const allowed = Array.isArray(data.allowedEmails) ? data.allowedEmails : ['fernandocastrofiore@gmail.com'];
       if (!allowed.includes('fernandocastrofiore@gmail.com')) {
         allowed.push('fernandocastrofiore@gmail.com');
       }
-      onUpdate({ ...data, allowedEmails: allowed });
+
+      // If user still has old 4-jar config in Firestore, automatically update to 2 jars (Salidas & Salud)
+      const hasOldConfig = !data.jars || data.jars.length > 2 || data.totalMonthlyBudget === 1000000;
+      if (hasOldConfig) {
+        const updated = {
+          ...DEFAULT_CONFIG,
+          allowedEmails: allowed,
+          secondaryEmail: data.secondaryEmail || ''
+        };
+        setDoc(CONFIG_DOC_PATH, updated).catch(console.error);
+        onUpdate(updated);
+      } else {
+        onUpdate({ ...data, allowedEmails: allowed });
+      }
     } else {
       // Initialize default config in Firestore
       setDoc(CONFIG_DOC_PATH, DEFAULT_CONFIG)

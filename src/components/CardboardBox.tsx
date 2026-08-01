@@ -15,7 +15,6 @@ export const CardboardBox: React.FC<CardboardBoxProps> = ({
   totalBudget,
   onDeductClick
 }) => {
-  // Calculate spent amounts per jar
   const spentByJar: Record<string, number> = {};
   let totalSpent = 0;
   expenses.forEach((exp) => {
@@ -29,16 +28,32 @@ export const CardboardBox: React.FC<CardboardBoxProps> = ({
     new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS', maximumFractionDigits: 0 }).format(n);
 
   return (
-    <div className="w-full">
-      {/* Total summary - one simple line */}
-      <div className="text-center mb-10">
-        <p className="font-body text-sm text-white/50 mb-1">Total disponible</p>
-        <p className="font-pixel text-xl md:text-2xl text-emerald-400">{fmt(totalRemaining)}</p>
-        <p className="font-body text-xs text-white/30 mt-1">de {fmt(totalBudget)} · gastado {fmt(totalSpent)}</p>
+    <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+      {/* Total Summary Row */}
+      <div style={{ textAlign: 'center', marginBottom: '32px' }}>
+        <p style={{ fontFamily: "'Pixelify Sans', 'VT323', monospace", fontSize: '14px', color: 'rgba(255,255,255,0.5)', marginBottom: '4px' }}>
+          Total disponible en La Caja
+        </p>
+        <p style={{ fontFamily: "'Press Start 2P', monospace", fontSize: '24px', color: '#10B981', margin: '4px 0' }}>
+          {fmt(totalRemaining)}
+        </p>
+        <p style={{ fontFamily: "'Pixelify Sans', 'VT323', monospace", fontSize: '13px', color: 'rgba(255,255,255,0.35)' }}>
+          de {fmt(totalBudget)} · total gastado {fmt(totalSpent)}
+        </p>
       </div>
 
-      {/* The jars - side by side, big and clear */}
-      <div className="flex justify-center items-end gap-10 md:gap-16 flex-wrap">
+      {/* Jars side-by-side container */}
+      <div 
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          flexWrap: 'wrap',
+          justifyContent: 'center',
+          alignItems: 'flex-end',
+          gap: '40px',
+          width: '100%'
+        }}
+      >
         {jars.map((jar) => (
           <GlassJar
             key={jar.id}
