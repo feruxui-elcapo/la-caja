@@ -29,29 +29,28 @@ export const CardboardBox: React.FC<CardboardBoxProps> = ({
 
   return (
     <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-      {/* Total Summary Row */}
-      <div style={{ textAlign: 'center', marginBottom: '32px' }}>
-        <p style={{ fontFamily: "'Pixelify Sans', 'VT323', monospace", fontSize: '14px', color: 'rgba(255,255,255,0.5)', marginBottom: '4px' }}>
-          Total disponible en La Caja
+      {/* Total Available Money Banner */}
+      <div style={{ textAlign: 'center', marginBottom: '24px' }}>
+        <p style={{ fontFamily: "'Pixelify Sans', 'VT323', monospace", fontSize: '13px', color: 'rgba(255,255,255,0.5)', marginBottom: '2px' }}>
+          Dinero disponible en los frascos
         </p>
-        <p style={{ fontFamily: "'Press Start 2P', monospace", fontSize: '24px', color: '#10B981', margin: '4px 0' }}>
+        <p style={{ fontFamily: "'Press Start 2P', monospace", fontSize: '20px', color: '#FBBF24', margin: '4px 0' }}>
           {fmt(totalRemaining)}
         </p>
-        <p style={{ fontFamily: "'Pixelify Sans', 'VT323', monospace", fontSize: '13px', color: 'rgba(255,255,255,0.35)' }}>
-          de {fmt(totalBudget)} · total gastado {fmt(totalSpent)}
+        <p style={{ fontFamily: "'Pixelify Sans', 'VT323', monospace", fontSize: '12px', color: 'rgba(255,255,255,0.35)' }}>
+          de {fmt(totalBudget)} · gastado {fmt(totalSpent)}
         </p>
       </div>
 
-      {/* Jars side-by-side container */}
+      {/* The 2 Jars Side-by-Side (Salidas & Salud) */}
       <div 
         style={{
           display: 'flex',
           flexDirection: 'row',
-          flexWrap: 'wrap',
           justifyContent: 'center',
           alignItems: 'flex-end',
-          gap: '40px',
-          width: '100%'
+          width: '100%',
+          maxWidth: '340px'
         }}
       >
         {jars.map((jar) => (

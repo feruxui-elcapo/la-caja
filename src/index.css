@@ -18,163 +18,165 @@ html, body {
   color: #f5f5f5;
   min-height: 100vh;
   overflow-x: hidden;
+  padding-bottom: 70px; /* Space for fixed bottom navbar */
 }
 
 /* ===== FONT UTILITIES ===== */
 .font-pixel { font-family: var(--font-pixel); }
 .font-body { font-family: var(--font-body); }
 
-/* ===== THE JAR - Big, Physical & Beautiful ===== */
-.jar-outer {
+/* ===== THE COIN GLASS JAR (Compact & Side-by-Side) ===== */
+.jar-outer-compact {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 12px;
-  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-.jar-outer:hover {
-  transform: translateY(-8px) scale(1.04);
+  flex: 1;
+  max-width: 150px;
+  margin: 0 4px;
 }
 
-/* Wooden Cork Lid */
-.jar-lid {
-  width: 90px;
-  height: 24px;
+/* Lid & Neck */
+.jar-lid-compact {
+  width: 70px;
+  height: 18px;
   background: linear-gradient(180deg, #d4a373 0%, #8B5E34 60%, #5c3e1e 100%);
-  border: 3px solid #1a0f07;
+  border: 2px solid #1a0f07;
   border-bottom: none;
-  border-radius: 10px 10px 3px 3px;
+  border-radius: 8px 8px 2px 2px;
   position: relative;
   z-index: 3;
-  box-shadow: inset 0 4px 0 rgba(255,255,255,0.3);
+  box-shadow: inset 0 3px 0 rgba(255,255,255,0.3);
 }
 
-/* Jar neck ring */
-.jar-neck {
-  width: 102px;
-  height: 12px;
+.jar-neck-compact {
+  width: 80px;
+  height: 9px;
   background: rgba(255,255,255,0.3);
-  border: 2px solid rgba(255,255,255,0.6);
-  border-radius: 3px;
+  border: 1.5px solid rgba(255,255,255,0.6);
+  border-radius: 2px;
   position: relative;
   z-index: 2;
-  box-shadow: inset 0 2px 4px rgba(255,255,255,0.4);
 }
 
-/* Jar body - the physical glass container */
-.jar-body {
-  width: 160px;
-  height: 280px;
-  background: linear-gradient(135deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.04) 100%);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 3.5px solid rgba(255,255,255,0.55);
-  border-top: 2px solid rgba(255,255,255,0.4);
-  border-radius: 16px 16px 36px 36px;
+/* Glass Body */
+.jar-body-compact {
+  width: 120px;
+  height: 200px;
+  background: linear-gradient(135deg, rgba(255,255,255,0.14) 0%, rgba(255,255,255,0.03) 100%);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: 3px solid rgba(255,255,255,0.5);
+  border-top: 1.5px solid rgba(255,255,255,0.35);
+  border-radius: 14px 14px 28px 28px;
   position: relative;
   overflow: hidden;
   box-shadow:
-    inset -10px 0 20px rgba(255,255,255,0.1),
-    inset 10px 0 20px rgba(0,0,0,0.3),
-    0 20px 50px rgba(0,0,0,0.7);
+    inset -6px 0 14px rgba(255,255,255,0.08),
+    inset 6px 0 14px rgba(0,0,0,0.25),
+    0 12px 30px rgba(0,0,0,0.6);
 }
 
-/* Glass reflection streaks */
-.jar-body::before {
+/* Glass reflections */
+.jar-body-compact::before {
   content: '';
   position: absolute;
-  top: 10px;
-  left: 12px;
-  width: 10px;
+  top: 8px;
+  left: 8px;
+  width: 7px;
   height: 75%;
-  background: linear-gradient(180deg,
-    rgba(255,255,255,0.5) 0%,
-    rgba(255,255,255,0.1) 60%,
-    transparent 100%);
-  border-radius: 6px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.45) 0%, rgba(255,255,255,0.08) 60%, transparent 100%);
+  border-radius: 4px;
   z-index: 10;
   pointer-events: none;
 }
 
-.jar-body::after {
-  content: '';
-  position: absolute;
-  top: 14px;
-  left: 26px;
-  width: 5px;
-  height: 45%;
-  background: linear-gradient(180deg,
-    rgba(255,255,255,0.3) 0%,
-    transparent 100%);
-  border-radius: 3px;
-  z-index: 10;
-  pointer-events: none;
-}
-
-/* Liquid fill inside glass */
-.jar-fill {
+/* Stacked Gold Coins Fill (Replaces Green Liquid) */
+.jar-coins-fill {
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
-  border-radius: 0 0 32px 32px;
-  transition: height 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 0 0 24px 24px;
+  transition: height 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
   overflow: hidden;
+  background: linear-gradient(180deg, #FBBF24 0%, #F59E0B 40%, #D97706 100%);
+  border-top: 2px solid #FEF08A;
 }
 
-/* Surface wave glow */
-.jar-fill::before {
-  content: '';
-  position: absolute;
-  top: -8px;
-  left: -10%;
-  right: -10%;
-  height: 16px;
-  border-radius: 50%;
-  background: inherit;
-  filter: brightness(1.4);
-  opacity: 0.8;
-}
-
-/* Floating coin patterns */
-.jar-coins {
+/* Coin stack texture pattern inside */
+.jar-coins-texture {
   position: absolute;
   inset: 0;
-  opacity: 0.35;
-  background-image:
-    radial-gradient(circle 5px at 30% 30%, rgba(255,255,255,0.7) 0%, transparent 100%),
-    radial-gradient(circle 4px at 70% 55%, rgba(255,255,255,0.6) 0%, transparent 100%),
-    radial-gradient(circle 6px at 45% 75%, rgba(255,255,255,0.5) 0%, transparent 100%);
-  animation: floatCoins 3s ease-in-out infinite alternate;
+  background-image: 
+    radial-gradient(circle 6px at 20% 20%, #FEF08A 0%, #F59E0B 100%),
+    radial-gradient(circle 6px at 50% 15%, #FDE047 0%, #D97706 100%),
+    radial-gradient(circle 6px at 80% 25%, #FEF08A 0%, #F59E0B 100%),
+    radial-gradient(circle 6px at 35% 45%, #FDE047 0%, #D97706 100%),
+    radial-gradient(circle 6px at 65% 50%, #FEF08A 0%, #F59E0B 100%),
+    radial-gradient(circle 6px at 25% 75%, #FDE047 0%, #D97706 100%),
+    radial-gradient(circle 6px at 75% 80%, #FEF08A 0%, #F59E0B 100%);
+  background-size: 32px 32px;
+  opacity: 0.85;
 }
 
-@keyframes floatCoins {
-  0% { transform: translateY(0); }
-  100% { transform: translateY(-6px); }
+/* ===== ANDROID BOTTOM NAVBAR ===== */
+.bottom-navbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 64px;
+  background: #12100E;
+  border-top: 2px solid #26201A;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  z-index: 50;
+  box-shadow: 0 -8px 20px rgba(0,0,0,0.8);
 }
 
-/* ===== SIMPLE PIXEL BUTTON ===== */
+.bottom-tab-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  flex: 1;
+  height: 100%;
+  background: transparent;
+  border: none;
+  color: #78716C;
+  font-family: var(--font-pixel);
+  font-size: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.bottom-tab-btn.active {
+  color: #F59E0B;
+}
+
+.bottom-tab-btn.active svg {
+  transform: translateY(-2px);
+}
+
+/* Button style */
 .btn-pixel {
   font-family: var(--font-pixel);
-  font-size: 0.7rem;
-  border: 3px solid #000;
-  box-shadow: 4px 4px 0 0 #000;
+  font-size: 0.65rem;
+  border: 2.5px solid #000;
+  box-shadow: 3px 3px 0 0 #000;
   cursor: pointer;
   user-select: none;
   transition: all 0.1s ease;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-.btn-pixel:hover {
-  transform: translate(-2px, -2px);
-  box-shadow: 6px 6px 0 0 #000;
 }
 .btn-pixel:active {
   transform: translate(2px, 2px);
-  box-shadow: 2px 2px 0 0 #000;
+  box-shadow: 1px 1px 0 0 #000;
 }
 
-/* ===== MODAL ===== */
+/* Modal */
 .modal-bg {
   position: fixed;
   inset: 0;
@@ -185,28 +187,14 @@ html, body {
   align-items: center;
   justify-content: center;
   padding: 16px;
-  animation: fadeIn 0.15s ease;
 }
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
+
 .modal-box {
   background: #141414;
   border: 3px solid #F59E0B;
   box-shadow: 8px 8px 0 0 #000;
   border-radius: 16px;
-  padding: 24px;
+  padding: 20px;
   width: 100%;
-  max-width: 420px;
-  animation: slideUp 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  max-width: 400px;
 }
-@keyframes slideUp {
-  from { transform: translateY(16px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
-}
-
-/* ===== Scrollbar ===== */
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }

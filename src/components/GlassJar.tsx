@@ -15,45 +15,63 @@ export const GlassJar: React.FC<GlassJarProps> = ({ jar, spentAmount, onDeductCl
     ? Math.max(0, Math.min(100, (remaining / jar.allocatedBudget) * 100))
     : 0;
 
-  // Color based on how full the jar is
-  let fillColor = '#10B981';
+  // Chibi expression based on coins remaining
   let chibi = '◠‿◠';
+  let chibiColor = '#F59E0B'; // Gold
   if (pct < 20) {
-    fillColor = '#EF4444';
     chibi = '> ﹏ <';
+    chibiColor = '#EF4444'; // Red
   } else if (pct < 50) {
-    fillColor = '#F59E0B';
     chibi = '• ɷ •';
+    chibiColor = '#FBBF24'; // Yellow
   }
 
   const fmt = (n: number) =>
     new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS', maximumFractionDigits: 0 }).format(n);
 
   return (
-    <div className="jar-outer" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '16px' }}>
-      {/* Chibi face floating above lid */}
+    <div className="jar-outer-compact">
+      {/* Chibi Expression */}
       <div 
         style={{ 
-          color: fillColor, 
           fontFamily: "'Press Start 2P', monospace", 
-          fontSize: '18px', 
-          marginBottom: '12px',
+          fontSize: '13px', 
+          color: chibiColor, 
+          marginBottom: '8px',
           userSelect: 'none'
         }}
       >
         ({chibi})
       </div>
 
-      {/* Physical Glass Jar */}
-      <div className="jar-lid" />
-      <div className="jar-neck" />
-      <div className="jar-body">
-        {/* Liquid fill inside glass */}
-        <div className="jar-fill" style={{ height: `${pct}%`, backgroundColor: fillColor }}>
-          <div className="jar-coins" />
+      {/* Glass Jar Body with Stacked Gold Coins */}
+      <div className="jar-lid-compact" />
+      <div className="jar-neck-compact" />
+      <div className="jar-body-compact">
+        {/* Stacked Gold Coins Fill */}
+        <div className="jar-coins-fill" style={{ height: `${pct}%` }}>
+          <div className="jar-coins-texture" />
+          {/* Animated 8-bit Coin Particles */}
+          {pct > 5 && (
+            <div 
+              style={{
+                position: 'absolute',
+                top: '4px',
+                left: 0,
+                right: 0,
+                display: 'flex',
+                justify.content: 'space-around',
+                fontSize: '10px',
+                pointerEvents: 'none',
+                opacity: 0.9
+              }}
+            >
+              🪙 🪙
+            </div>
+          )}
         </div>
 
-        {/* Text Label on the Glass Jar */}
+        {/* Jar Label Text */}
         <div 
           style={{
             position: 'absolute',
@@ -63,7 +81,7 @@ export const GlassJar: React.FC<GlassJarProps> = ({ jar, spentAmount, onDeductCl
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
-            padding: '12px',
+            padding: '8px',
             textAlign: 'center',
             pointerEvents: 'none'
           }}
@@ -71,12 +89,11 @@ export const GlassJar: React.FC<GlassJarProps> = ({ jar, spentAmount, onDeductCl
           <span 
             style={{ 
               fontFamily: "'Press Start 2P', monospace", 
-              fontSize: '11px', 
+              fontSize: '9px', 
               color: '#FFFFFF', 
               textShadow: '0 2px 4px rgba(0,0,0,0.95)',
               textTransform: 'uppercase',
-              letterSpacing: '1px',
-              marginBottom: '8px'
+              marginBottom: '6px'
             }}
           >
             {jar.name}
@@ -85,9 +102,9 @@ export const GlassJar: React.FC<GlassJarProps> = ({ jar, spentAmount, onDeductCl
           <span 
             style={{ 
               fontFamily: "'Press Start 2P', monospace", 
-              fontSize: '15px', 
+              fontSize: '12px', 
               fontWeight: 900,
-              color: '#FFFFFF', 
+              color: '#FEF08A', 
               textShadow: '0 2px 6px rgba(0,0,0,0.95)'
             }}
           >
@@ -97,10 +114,10 @@ export const GlassJar: React.FC<GlassJarProps> = ({ jar, spentAmount, onDeductCl
           <span 
             style={{ 
               fontFamily: "'Pixelify Sans', 'VT323', monospace", 
-              fontSize: '13px', 
-              color: 'rgba(255,255,255,0.7)', 
+              fontSize: '11px', 
+              color: 'rgba(255,255,255,0.75)', 
               textShadow: '0 1px 3px rgba(0,0,0,0.9)',
-              marginTop: '4px'
+              marginTop: '2px'
             }}
           >
             de {fmt(jar.allocatedBudget)}
@@ -108,24 +125,26 @@ export const GlassJar: React.FC<GlassJarProps> = ({ jar, spentAmount, onDeductCl
         </div>
       </div>
 
-      {/* Button directly under the jar */}
+      {/* Deduct Button */}
       <button
         onClick={() => { soundFX.playClick(); onDeductClick(jar); }}
         className="btn-pixel"
         style={{
           backgroundColor: '#EF4444',
           color: '#FFFFFF',
-          padding: '10px 20px',
-          borderRadius: '12px',
-          marginTop: '20px',
+          padding: '8px 14px',
+          borderRadius: '10px',
+          marginTop: '12px',
           display: 'inline-flex',
           alignItems: 'center',
-          gap: '8px',
-          fontSize: '11px'
+          gap: '4px',
+          fontSize: '10px',
+          width: '100%',
+          justifyContent: 'center'
         }}
       >
-        <Minus size={14} strokeWidth={3} />
-        <span>- ANOTAR GASTO</span>
+        <Minus size={12} strokeWidth={3} />
+        <span>GASTO</span>
       </button>
     </div>
   );
