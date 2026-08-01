@@ -1,0 +1,290 @@
+@import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;600;700&family=Press+Start+2P&family=VT323&display=swap');
+@import "tailwindcss";
+
+:root {
+  --font-pixel-title: 'Press Start 2P', monospace;
+  --font-pixel-body: 'Pixelify Sans', 'VT323', monospace;
+  
+  --pixel-black: #12100E;
+  --pixel-cardboard-light: #D4A373;
+  --pixel-cardboard-mid: #B58D63;
+  --pixel-cardboard-dark: #7A532C;
+  --pixel-cardboard-deep: #4D331A;
+  
+  --pixel-tape: #F4E2B8;
+  
+  --pixel-green: #10B981;
+  --pixel-amber: #F59E0B;
+  --pixel-red: #EF4444;
+  --pixel-blue: #3B82F6;
+  --pixel-purple: #8B5CF6;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+body {
+  font-family: var(--font-pixel-body);
+  background-color: var(--pixel-black);
+  background-image: 
+    linear-gradient(rgba(18, 16, 14, 0.94), rgba(18, 16, 14, 0.94)),
+    repeating-linear-gradient(0deg, transparent, transparent 4px, rgba(0, 0, 0, 0.3) 4px, rgba(0, 0, 0, 0.3) 8px),
+    repeating-linear-gradient(90deg, transparent, transparent 4px, rgba(0, 0, 0, 0.3) 4px, rgba(0, 0, 0, 0.3) 8px);
+  color: #F9FAFB;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Pixel Art Fonts */
+.font-pixel-title {
+  font-family: var(--font-pixel-title);
+}
+
+.font-pixel-body {
+  font-family: var(--font-pixel-body);
+}
+
+/* Pixel Box Border Utilities (Crisp 8-Bit Border) */
+.pixel-box {
+  background-color: #1E1A17;
+  border: 4px solid #000;
+  box-shadow: 
+    4px 0 0 0 #000, 
+    -4px 0 0 0 #000, 
+    0 -4px 0 0 #000, 
+    0 4px 0 0 #000,
+    6px 6px 0 0 rgba(0,0,0,0.6);
+}
+
+.pixel-cardboard {
+  background-color: var(--pixel-cardboard-mid);
+  border: 4px solid #4D331A;
+  box-shadow: 
+    4px 0 0 0 #362311, 
+    -4px 0 0 0 #362311, 
+    0 -4px 0 0 #362311, 
+    0 4px 0 0 #362311,
+    8px 8px 0 0 rgba(0, 0, 0, 0.7);
+  position: relative;
+}
+
+/* 8-Bit Cardboard Tape Strips */
+.pixel-tape {
+  position: absolute;
+  height: 32px;
+  background: var(--pixel-tape);
+  border: 3px solid #6E532F;
+  box-shadow: 3px 3px 0 0 rgba(0, 0, 0, 0.3);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.pixel-tape-left {
+  top: -12px;
+  left: 30px;
+  width: 120px;
+  transform: rotate(-3deg);
+}
+
+.pixel-tape-right {
+  top: -12px;
+  right: 30px;
+  width: 120px;
+  transform: rotate(2deg);
+}
+
+.pixel-stamp {
+  border: 3px dashed #4D331A;
+  background: rgba(244, 226, 184, 0.2);
+  color: #4D331A;
+  font-family: var(--font-pixel-title);
+  font-size: 0.65rem;
+  padding: 4px 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Chibi Glass Jar Styling */
+.chibi-jar-container {
+  perspective: 800px;
+  transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.chibi-jar-container:hover {
+  transform: translateY(-6px) scale(1.02);
+}
+
+.chibi-glass-jar {
+  background: rgba(255, 255, 255, 0.15);
+  border: 4px solid #FFF;
+  box-shadow: 
+    4px 0 0 0 #000, 
+    -4px 0 0 0 #000, 
+    0 -4px 0 0 #000, 
+    0 4px 0 0 #000,
+    6px 6px 0 0 rgba(0, 0, 0, 0.5);
+  border-radius: 20px 20px 16px 16px;
+  position: relative;
+  overflow: hidden;
+  min-height: 320px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 12px;
+}
+
+/* 8-Bit Wooden Lid */
+.chibi-jar-lid {
+  width: 75%;
+  height: 20px;
+  margin: 0 auto -2px auto;
+  background-color: #8B5E34;
+  border: 3px solid #000;
+  box-shadow: inset 0 3px 0 #D4A373;
+  z-index: 5;
+  position: relative;
+}
+
+.chibi-jar-neck {
+  width: 85%;
+  height: 10px;
+  margin: 0 auto;
+  background-color: rgba(255, 255, 255, 0.4);
+  border: 2px solid #000;
+  z-index: 4;
+}
+
+/* Pixel Liquid / Money Fill Level */
+.chibi-fill-container {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border-radius: 0 0 12px 12px;
+  overflow: hidden;
+  z-index: 1;
+  transition: height 0.6s steps(10, end);
+}
+
+.chibi-fill-pixel {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  background-size: 16px 16px;
+  background-image: 
+    linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%),
+    linear-gradient(-45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, rgba(255, 255, 255, 0.15) 75%),
+    linear-gradient(-45deg, transparent 75%, rgba(255, 255, 255, 0.15) 75%);
+}
+
+.pixel-coin-float {
+  animation: pixelFloat 2s steps(4, start) infinite alternate;
+}
+
+@keyframes pixelFloat {
+  0% { transform: translateY(0px); }
+  100% { transform: translateY(-8px); }
+}
+
+/* Chibi Face Badge inside Jar */
+.chibi-face-container {
+  background: #FFF;
+  border: 3px solid #000;
+  box-shadow: 3px 3px 0 0 #000;
+  padding: 4px 8px;
+  border-radius: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--font-pixel-title);
+  font-size: 0.75rem;
+  color: #000;
+  margin: 0 auto 6px auto;
+}
+
+/* 8-Bit Pixel Button */
+.btn-pixel {
+  font-family: var(--font-pixel-title);
+  border: 3px solid #000;
+  box-shadow: 4px 4px 0 0 #000;
+  transition: all 0.1s ease;
+  cursor: pointer;
+  user-select: none;
+  text-transform: uppercase;
+}
+
+.btn-pixel:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 0 #000;
+}
+
+.btn-pixel:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 0 #000;
+}
+
+.btn-pixel-red {
+  background-color: #EF4444;
+  color: #FFF;
+  text-shadow: 2px 2px 0 #991B1B;
+}
+
+.btn-pixel-amber {
+  background-color: #F59E0B;
+  color: #000;
+}
+
+.btn-pixel-green {
+  background-color: #10B981;
+  color: #FFF;
+  text-shadow: 2px 2px 0 #065F46;
+}
+
+/* Pixel Modal Overlay */
+.pixel-modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(10, 8, 6, 0.85);
+  backdrop-filter: blur(4px);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.pixel-modal-card {
+  background-color: #1E1A17;
+  border: 4px solid #F59E0B;
+  box-shadow: 
+    6px 0 0 0 #000, 
+    -6px 0 0 0 #000, 
+    0 -6px 0 0 #000, 
+    0 6px 0 0 #000,
+    10px 10px 0 0 rgba(0, 0, 0, 0.8);
+  padding: 24px;
+  width: 100%;
+  max-width: 500px;
+}
+
+/* CRT Scanline FX */
+.scanline-effect {
+  position: relative;
+}
+.scanline-effect::after {
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+  background: linear-gradient(rgba(18, 16, 14, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
+  background-size: 100% 4px;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0.4;
+}

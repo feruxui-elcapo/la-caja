@@ -1,0 +1,24 @@
+{
+  "name": "La Caja - Gastos 8-Bit",
+  "short_name": "La Caja 8-Bit",
+  "description": "App de gastos compartidos Chibi 8-Bit con presupuesto mensual en frascos",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#12100E",
+  "theme_color": "#C29B72",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/pwa-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/pwa-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
