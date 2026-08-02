@@ -30,19 +30,34 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ user, isAuthorized, al
   // Unauthorized screen
   if (user && !isAuthorized) {
     return (
-      <div className="min-h-screen bg-[#0b0c10] flex items-center justify-center p-6 font-sans">
-        <div className="text-center max-w-sm p-8 rounded-3xl bg-slate-900/60 border border-red-500/30 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.8)]">
-          <ShieldAlert size={48} className="mx-auto mb-4 text-red-500" />
-          <h2 className="font-bold text-xl text-white mb-2 tracking-tight">Acceso Denegado</h2>
-          <p className="text-sm text-stone-400 mb-6 leading-relaxed">
-            La cuenta <strong className="text-stone-200">{user.email}</strong> no tiene permisos autorizados en La Caja.
+      <div style={{ minHeight: '100vh', backgroundColor: '#0a0a0c', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '24px', fontFamily: "'Pixelify Sans', monospace" }}>
+        <div style={{ textAlign: 'center', maxWidth: '360px', width: '100%', padding: '32px 24px', borderRadius: '24px', backgroundColor: 'rgba(255, 255, 255, 0.04)', border: '1px solid rgba(239, 68, 68, 0.35)', boxShadow: '0 20px 50px rgba(0,0,0,0.8)' }}>
+          <ShieldAlert size={48} style={{ margin: '0 auto 16px', color: '#EF4444' }} />
+          <h2 style={{ fontFamily: "'Pixelify Sans', monospace", fontWeight: 700, fontSize: '22px', color: '#FFFFFF', marginBottom: '8px' }}>ACCESO DENEGADO</h2>
+          <p style={{ fontFamily: "'Pixelify Sans', monospace", fontSize: '15px', color: 'rgba(255,255,255,0.6)', marginBottom: '24px' }}>
+            <strong style={{ color: '#FFFFFF' }}>{user.email}</strong> no está autorizado.
           </p>
           <button 
             onClick={() => logout()} 
-            className="w-full py-3.5 px-5 rounded-2xl font-semibold text-white bg-white/10 hover:bg-white/15 border border-white/15 transition-all flex items-center justify-center gap-2"
+            style={{
+              width: '100%',
+              padding: '14px',
+              borderRadius: '16px',
+              fontFamily: "'Pixelify Sans', monospace",
+              fontWeight: 700,
+              fontSize: '16px',
+              color: '#FFFFFF',
+              backgroundColor: 'rgba(255, 255, 255, 0.08)',
+              border: '1px solid rgba(255, 255, 255, 0.15)',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '8px'
+            }}
           >
-            <LogOut size={16} />
-            <span>Cambiar de cuenta</span>
+            <LogOut size={18} />
+            <span>Cambiar cuenta</span>
           </button>
         </div>
       </div>
@@ -51,25 +66,41 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ user, isAuthorized, al
 
   // Login screen
   return (
-    <div className="min-h-screen bg-[#0b0c10] flex items-center justify-center p-6 font-sans">
-      <div className="text-center max-w-sm w-full p-8 rounded-3xl bg-gradient-to-b from-amber-500/10 via-slate-900/80 to-slate-900/90 border border-amber-500/20 backdrop-blur-xl shadow-[0_25px_60px_rgba(0,0,0,0.9)]">
-        <div className="w-16 h-16 rounded-2xl bg-amber-500/15 border border-amber-500/30 flex items-center justify-center mx-auto mb-5 text-amber-400 shadow-[0_0_25px_rgba(245,158,11,0.25)]">
+    <div style={{ minHeight: '100vh', backgroundColor: '#0a0a0c', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '24px', fontFamily: "'Pixelify Sans', monospace" }}>
+      <div style={{ textAlign: 'center', maxWidth: '360px', width: '100%', padding: '36px 28px', borderRadius: '28px', backgroundColor: 'rgba(245, 158, 11, 0.06)', border: '1.5px solid rgba(245, 158, 11, 0.25)', boxShadow: '0 25px 60px rgba(0,0,0,0.9)' }}>
+        <div style={{ width: '64px', height: '64px', borderRadius: '20px', backgroundColor: 'rgba(245, 158, 11, 0.15)', border: '1px solid rgba(245, 158, 11, 0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px', color: '#F59E0B' }}>
           <Package size={36} />
         </div>
         
-        <h1 className="font-extrabold text-2xl text-white tracking-tight mb-1">LA CAJA</h1>
-        <p className="text-sm text-stone-400 mb-8">Gastos compartidos en frascos</p>
+        <h1 style={{ fontFamily: "'Pixelify Sans', monospace", fontWeight: 700, fontSize: '28px', color: '#F59E0B', margin: '0 0 4px', letterSpacing: '0.04em' }}>LA CAJA</h1>
+        <p style={{ fontFamily: "'Pixelify Sans', monospace", fontSize: '15px', color: 'rgba(255,255,255,0.5)', margin: '0 0 32px' }}>Gastos compartidos en frascos</p>
 
         {loginError && (
-          <p className="text-red-400 text-xs mb-4 bg-red-950/50 border border-red-500/20 rounded-xl p-3">{loginError}</p>
+          <p style={{ color: '#F87171', fontSize: '14px', marginBottom: '16px', backgroundColor: 'rgba(153, 27, 27, 0.4)', padding: '10px', borderRadius: '12px' }}>{loginError}</p>
         )}
 
         <button
           onClick={handleLogin}
           disabled={loading}
-          className="w-full py-4 px-5 rounded-2xl font-bold text-gray-900 bg-white hover:bg-stone-100 shadow-[0_4px_20px_rgba(255,255,255,0.2)] transition-all scale-[1.01] active:scale-[0.98] flex items-center justify-center gap-3"
+          style={{
+            width: '100%',
+            height: '52px',
+            borderRadius: '16px',
+            fontFamily: "'Pixelify Sans', monospace",
+            fontWeight: 700,
+            fontSize: '16px',
+            color: '#000000',
+            backgroundColor: '#FFFFFF',
+            border: 'none',
+            boxShadow: '0 4px 20px rgba(255,255,255,0.2)',
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '10px'
+          }}
         >
-          <svg className="w-5 h-5" viewBox="0 0 24 24">
+          <svg style={{ width: '20px', height: '20px' }} viewBox="0 0 24 24">
             <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
             <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
             <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>

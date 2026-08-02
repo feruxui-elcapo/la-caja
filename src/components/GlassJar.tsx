@@ -17,38 +17,57 @@ export const GlassJar: React.FC<GlassJarProps> = ({ jar, spentAmount, onDeductCl
 
   // Chibi expression based on coins remaining
   let chibi = '◠‿◠';
-  let chibiColor = 'text-amber-400 bg-amber-400/10 border-amber-400/30';
+  let chibiColor = '#F59E0B';
+  let chibiBg = 'rgba(245, 158, 11, 0.12)';
+  let chibiBorder = 'rgba(245, 158, 11, 0.35)';
+
   if (pct < 20) {
     chibi = '> ﹏ <';
-    chibiColor = 'text-red-400 bg-red-400/10 border-red-400/30';
+    chibiColor = '#EF4444';
+    chibiBg = 'rgba(239, 68, 68, 0.12)';
+    chibiBorder = 'rgba(239, 68, 68, 0.35)';
   } else if (pct < 50) {
     chibi = '• ɷ •';
-    chibiColor = 'text-yellow-400 bg-yellow-400/10 border-yellow-400/30';
+    chibiColor = '#FBBF24';
+    chibiBg = 'rgba(251, 191, 36, 0.12)';
+    chibiBorder = 'rgba(251, 191, 36, 0.35)';
   }
 
   const fmt = (n: number) =>
     new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS', maximumFractionDigits: 0 }).format(n);
 
   const getIcon = () => {
-    if (jar.name.toLowerCase().includes('salida')) return <Coffee size={14} className="text-amber-300" />;
-    if (jar.name.toLowerCase().includes('salud')) return <Heart size={14} className="text-emerald-300" />;
-    return <Package size={14} className="text-blue-300" />;
+    if (jar.name.toLowerCase().includes('salida')) return <Coffee size={14} color="#FBBF24" />;
+    if (jar.name.toLowerCase().includes('salud')) return <Heart size={14} color="#34D399" />;
+    return <Package size={14} color="#60A5FA" />;
   };
 
   return (
     <div className="jar-outer-compact">
       {/* Chibi Expression Badge */}
       <div 
-        className={`font-pixel text-[13px] font-bold px-3 py-1 rounded-full border mb-3 shadow-sm transition-all duration-300 ${chibiColor}`}
+        style={{ 
+          fontFamily: "'Pixelify Sans', monospace", 
+          fontSize: '15px', 
+          fontWeight: 700,
+          color: chibiColor, 
+          backgroundColor: chibiBg,
+          border: `1px solid ${chibiBorder}`,
+          padding: '4px 14px',
+          borderRadius: '20px',
+          marginBottom: '12px',
+          userSelect: 'none',
+          boxShadow: '0 2px 8px rgba(0,0,0,0.3)'
+        }}
       >
         ({chibi})
       </div>
 
-      {/* Glass Jar Container */}
+      {/* Glass Jar Body with Stacked Gold Coins */}
       <div className="jar-lid-compact" />
       <div className="jar-neck-compact" />
       <div className="jar-body-compact">
-        {/* Coins Fill */}
+        {/* Stacked Gold Coins Fill */}
         <div className="jar-coins-fill" style={{ height: `${pct}%` }}>
           <div className="jar-coins-texture" />
           {pct > 8 && (
@@ -71,7 +90,7 @@ export const GlassJar: React.FC<GlassJarProps> = ({ jar, spentAmount, onDeductCl
           )}
         </div>
 
-        {/* Jar Content Overlay */}
+        {/* Jar Label Text */}
         <div 
           style={{
             position: 'absolute',
@@ -86,39 +105,86 @@ export const GlassJar: React.FC<GlassJarProps> = ({ jar, spentAmount, onDeductCl
             pointerEvents: 'none'
           }}
         >
-          <div className="flex items-center gap-1.5 mb-1 bg-black/40 backdrop-blur-md px-2.5 py-0.5 rounded-full border border-white/10">
+          <div 
+            style={{ 
+              display: 'flex', 
+              alignItems: 'center', 
+              gap: '6px',
+              backgroundColor: 'rgba(0,0,0,0.5)', 
+              padding: '3px 10px', 
+              borderRadius: '12px', 
+              border: '1px solid rgba(255,255,255,0.15)',
+              marginBottom: '6px'
+            }}
+          >
             {getIcon()}
             <span 
-              className="font-sans font-bold text-[11px] text-white tracking-wide uppercase"
-              style={{ textShadow: '0 2px 4px rgba(0,0,0,0.9)' }}
+              style={{ 
+                fontFamily: "'Pixelify Sans', monospace", 
+                fontSize: '14px', 
+                fontWeight: 700,
+                color: '#FFFFFF', 
+                textTransform: 'uppercase',
+                letterSpacing: '0.05em',
+                textShadow: '0 2px 4px rgba(0,0,0,0.95)'
+              }}
             >
               {jar.name}
             </span>
           </div>
           
           <span 
-            className="font-sans font-extrabold text-base text-yellow-200 mt-1"
-            style={{ textShadow: '0 2px 8px rgba(0,0,0,0.95)' }}
+            style={{ 
+              fontFamily: "'Pixelify Sans', monospace", 
+              fontSize: '20px', 
+              fontWeight: 700,
+              color: '#FEF08A', 
+              textShadow: '0 2px 6px rgba(0,0,0,0.95)',
+              marginTop: '2px'
+            }}
           >
             {fmt(remaining)}
           </span>
 
           <span 
-            className="font-sans text-[11px] text-white/70 mt-0.5"
-            style={{ textShadow: '0 1px 3px rgba(0,0,0,0.9)' }}
+            style={{ 
+              fontFamily: "'Pixelify Sans', monospace", 
+              fontSize: '13px', 
+              color: 'rgba(255,255,255,0.8)', 
+              textShadow: '0 1px 3px rgba(0,0,0,0.9)',
+              marginTop: '2px'
+            }}
           >
             de {fmt(jar.allocatedBudget)}
           </span>
         </div>
       </div>
 
-      {/* Deduct Button */}
+      {/* Deduct Button (Single Minus Icon + Text "GASTO") */}
       <button
         onClick={() => { soundFX.playClick(); onDeductClick(jar); }}
-        className="w-full mt-4 py-3 px-3 rounded-2xl font-sans font-bold text-xs text-white bg-gradient-to-r from-red-500 via-rose-600 to-red-600 hover:from-red-400 hover:to-rose-500 shadow-[0_4px_16px_rgba(239,68,68,0.35)] transition-all scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-1.5"
+        style={{
+          width: '100%',
+          marginTop: '20px',
+          padding: '12px 14px',
+          borderRadius: '16px',
+          fontFamily: "'Pixelify Sans', monospace",
+          fontSize: '16px',
+          fontWeight: 700,
+          color: '#FFFFFF',
+          background: 'linear-gradient(135deg, #EF4444 0%, #DC2626 100%)',
+          border: 'none',
+          boxShadow: '0 4px 16px rgba(239, 68, 68, 0.4)',
+          cursor: 'pointer',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: '6px',
+          transition: 'all 0.2s ease'
+        }}
       >
-        <Minus size={14} strokeWidth={3} />
-        <span>- GASTO</span>
+        <Minus size={18} strokeWidth={3} />
+        <span>GASTO</span>
       </button>
     </div>
   );

@@ -25,20 +25,33 @@ export const ResetCountdown: React.FC = () => {
   const pad = (n: number) => String(n).padStart(2, '0');
 
   return (
-    <div className="text-center mb-6">
-      <p className="font-sans text-xs text-stone-400 mb-2 flex items-center justify-center gap-1.5">
-        <Clock size={13} className="text-amber-400/80" />
+    <div style={{ textAlign: 'center', marginBottom: '28px' }}>
+      <p style={{ fontFamily: "'Pixelify Sans', monospace", fontSize: '14px', color: 'rgba(255,255,255,0.6)', marginBottom: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
+        <Clock size={15} style={{ color: '#F59E0B' }} />
         <span>Renovación el 1° de cada mes en:</span>
       </p>
       <div 
-        className="inline-flex items-center gap-2 font-sans font-bold text-sm text-amber-300 bg-amber-500/10 border border-amber-500/25 px-4 py-1.5 rounded-full shadow-[0_0_15px_rgba(245,158,11,0.15)]"
+        style={{
+          display: 'inline-flex',
+          alignItems: 'center',
+          gap: '8px',
+          fontFamily: "'Pixelify Sans', monospace",
+          fontSize: '16px',
+          fontWeight: 700,
+          color: '#FDE047',
+          backgroundColor: 'rgba(245, 158, 11, 0.12)',
+          border: '1px solid rgba(245, 158, 11, 0.3)',
+          padding: '8px 20px',
+          borderRadius: '24px',
+          boxShadow: '0 0 15px rgba(245, 158, 11, 0.15)'
+        }}
       >
         <span>{timeLeft.days}d</span>
-        <span className="opacity-40">:</span>
+        <span style={{ opacity: 0.4 }}>:</span>
         <span>{pad(timeLeft.hours)}h</span>
-        <span className="opacity-40">:</span>
+        <span style={{ opacity: 0.4 }}>:</span>
         <span>{pad(timeLeft.minutes)}m</span>
-        <span className="opacity-40">:</span>
+        <span style={{ opacity: 0.4 }}>:</span>
         <span>{pad(timeLeft.seconds)}s</span>
       </div>
     </div>

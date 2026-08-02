@@ -23,8 +23,7 @@ import {
   LogOut, 
   CheckCircle2, 
   Search,
-  Download,
-  WifiOff
+  Download
 } from 'lucide-react';
 import { soundFX } from './utils/audio';
 
@@ -105,8 +104,8 @@ export const App: React.FC = () => {
 
   if (authLoading) {
     return (
-      <div className="min-h-screen bg-[#0b0c10] flex items-center justify-center p-4">
-        <div className="font-sans font-bold text-sm text-amber-400 flex items-center gap-2 animate-pulse">
+      <div style={{ minHeight: '100vh', backgroundColor: '#0a0a0c', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ fontFamily: "'Pixelify Sans', monospace", fontWeight: 700, fontSize: '16px', color: '#F59E0B' }}>
           Cargando La Caja...
         </div>
       </div>
@@ -168,14 +167,14 @@ export const App: React.FC = () => {
   );
 
   return (
-    <div className="min-h-screen bg-[#0b0c10] text-gray-100 flex flex-col font-sans">
+    <div style={{ minHeight: '100vh', backgroundColor: '#0a0a0c', color: '#f3f4f6', display: 'flex', flexDirection: 'column', fontFamily: "'Pixelify Sans', monospace" }}>
       
       {/* MAIN CONTAINER */}
-      <main className="flex-1 max-w-[480px] w-full mx-auto px-4 py-6">
+      <main style={{ flex: 1, maxWidth: '480px', width: '100%', margin: '0 auto', padding: '24px 16px' }}>
 
         {/* TAB 1: INICIO */}
         {activeTab === 'home' && (
-          <div className="flex flex-col items-center">
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <ResetCountdown />
             <CardboardBox
               jars={config.jars || []}
@@ -189,45 +188,65 @@ export const App: React.FC = () => {
         {/* TAB 2: HISTORIAL DE GASTOS */}
         {activeTab === 'history' && (
           <div>
-            <h2 className="font-extrabold text-lg text-amber-400 mb-4 text-center tracking-tight">
+            <h2 style={{ fontFamily: "'Pixelify Sans', monospace", fontWeight: 700, fontSize: '22px', color: '#F59E0B', marginBottom: '20px', textAlign: 'center', letterSpacing: '0.04em' }}>
               Historial de Gastos
             </h2>
 
             {/* Search Input */}
-            <div className="relative mb-4">
-              <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-stone-400" />
+            <div style={{ position: 'relative', marginBottom: '20px' }}>
+              <Search size={18} style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)', color: 'rgba(255,255,255,0.4)' }} />
               <input
                 type="text"
                 placeholder="Buscar gasto por concepto o frasco..."
                 value={historySearch}
                 onChange={(e) => setHistorySearch(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 bg-white/5 border border-white/10 rounded-2xl text-white font-sans text-sm outline-none focus:border-amber-400/50 transition-colors placeholder:text-stone-500"
+                style={{
+                  width: '100%',
+                  height: '48px',
+                  paddingLeft: '44px',
+                  paddingRight: '16px',
+                  backgroundColor: 'rgba(255,255,255,0.06)',
+                  border: '1px solid rgba(255,255,255,0.12)',
+                  borderRadius: '16px',
+                  color: '#FFFFFF',
+                  fontFamily: "'Pixelify Sans', monospace",
+                  fontSize: '16px',
+                  outline: 'none'
+                }}
               />
             </div>
 
             {/* Expenses List */}
-            <div className="flex flex-col gap-2.5">
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
               {filteredExpenses.length === 0 ? (
-                <div className="text-center text-stone-500 font-sans text-sm py-12 bg-white/3 rounded-2xl border border-white/5">
+                <div style={{ textAlign: 'center', color: 'rgba(255,255,255,0.4)', fontFamily: "'Pixelify Sans', monospace", fontSize: '15px', padding: '48px 0', backgroundColor: 'rgba(255,255,255,0.03)', borderRadius: '16px', border: '1px solid rgba(255,255,255,0.06)' }}>
                   Sin gastos registrados este mes.
                 </div>
               ) : (
                 filteredExpenses.map((exp) => (
                   <div
                     key={exp.id}
-                    className="flex items-center justify-between bg-white/5 border border-white/8 hover:border-white/15 rounded-2xl p-4 transition-all"
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      backgroundColor: 'rgba(255,255,255,0.05)',
+                      border: '1px solid rgba(255,255,255,0.1)',
+                      borderRadius: '16px',
+                      padding: '16px'
+                    }}
                   >
-                    <div className="min-w-0 flex-1 pr-3">
-                      <p className="font-bold text-sm text-white truncate">
+                    <div style={{ minWidth: 0, flex: 1, paddingRight: '12px' }}>
+                      <p style={{ fontFamily: "'Pixelify Sans', monospace", fontSize: '17px', fontWeight: 700, color: '#FFFFFF', margin: 0 }}>
                         {exp.description}
                       </p>
-                      <p className="text-xs text-stone-400 mt-0.5">
-                        <span className="text-amber-400/90 font-semibold">{exp.jarName}</span> · {fmtDate(exp.date)}
+                      <p style={{ fontFamily: "'Pixelify Sans', monospace", fontSize: '13px', color: 'rgba(255,255,255,0.5)', marginTop: '4px', margin: 0 }}>
+                        <span style={{ color: '#FBBF24', fontWeight: 700 }}>{exp.jarName}</span> · {fmtDate(exp.date)}
                       </p>
                     </div>
 
-                    <div className="flex items-center gap-3 shrink-0">
-                      <span className="font-bold text-sm text-red-400">
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '14px', shrink: 0 }}>
+                      <span style={{ fontFamily: "'Pixelify Sans', monospace", fontSize: '17px', fontWeight: 700, color: '#EF4444' }}>
                         -{fmt(exp.amount)}
                       </span>
                       <button
@@ -237,10 +256,21 @@ export const App: React.FC = () => {
                             await deleteExpense(exp.id);
                           }
                         }}
-                        className="p-2 rounded-xl bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/20 transition-all"
+                        style={{
+                          background: 'rgba(239, 68, 68, 0.12)',
+                          border: '1px solid rgba(239, 68, 68, 0.3)',
+                          borderRadius: '12px',
+                          color: '#EF4444',
+                          cursor: 'pointer',
+                          padding: '8px 10px',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          transition: 'all 0.15s ease'
+                        }}
                         title="Eliminar gasto"
                       >
-                        <Trash2 size={15} />
+                        <Trash2 size={16} />
                       </button>
                     </div>
                   </div>
@@ -253,33 +283,46 @@ export const App: React.FC = () => {
         {/* TAB 3: PERFIL Y AJUSTES */}
         {activeTab === 'profile' && (
           <div>
-            <h2 className="font-extrabold text-lg text-amber-400 mb-6 text-center tracking-tight">
+            <h2 style={{ fontFamily: "'Pixelify Sans', monospace", fontWeight: 700, fontSize: '22px', color: '#F59E0B', marginBottom: '24px', textAlign: 'center', letterSpacing: '0.04em' }}>
               Perfil y Ajustes
             </h2>
 
             {/* User Profile Card */}
-            <div className="bg-white/5 border border-white/10 rounded-3xl p-5 flex items-center gap-4 mb-6">
+            <div style={{ backgroundColor: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.12)', borderRadius: '24px', padding: '20px', display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '28px' }}>
               {user.photoURL ? (
-                <img src={user.photoURL} alt="" className="w-12 h-12 rounded-full border-2 border-amber-400" />
+                <img src={user.photoURL} alt="" style={{ width: '52px', height: '52px', borderRadius: '50%', border: '2px solid #F59E0B' }} />
               ) : (
-                <div className="w-12 h-12 rounded-full bg-amber-500/20 border border-amber-400 flex items-center justify-center text-amber-400 font-bold">
+                <div style={{ width: '52px', height: '52px', borderRadius: '50%', backgroundColor: 'rgba(245, 158, 11, 0.2)', border: '1.5px solid #F59E0B', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#F59E0B', fontWeight: 700 }}>
                   {user.displayName?.[0] || 'U'}
                 </div>
               )}
-              <div className="flex-1 min-w-0">
-                <p className="font-bold text-sm text-white truncate">
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <p style={{ fontFamily: "'Pixelify Sans', monospace", fontSize: '18px', fontWeight: 700, color: '#FFFFFF', margin: 0, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                   {user.displayName || user.email?.split('@')[0]}
                 </p>
-                <p className="text-xs text-stone-400 mt-0.5 truncate">
+                <p style={{ fontFamily: "'Pixelify Sans', monospace", fontSize: '14px', color: 'rgba(255,255,255,0.5)', marginTop: '4px', margin: 0, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                   {user.email}
                 </p>
               </div>
               <button
                 onClick={() => { soundFX.playClick(); logout(); }}
-                className="py-2 px-3.5 rounded-xl bg-red-500/12 hover:bg-red-500/20 text-red-400 border border-red-500/30 font-semibold text-xs transition-all flex items-center gap-1.5 shrink-0"
+                style={{
+                  background: 'rgba(239, 68, 68, 0.15)',
+                  border: '1px solid rgba(239, 68, 68, 0.35)',
+                  borderRadius: '14px',
+                  color: '#EF4444',
+                  cursor: 'pointer',
+                  padding: '10px 14px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  fontSize: '14px',
+                  fontFamily: "'Pixelify Sans', monospace",
+                  fontWeight: 700
+                }}
                 title="Cerrar Sesión"
               >
-                <LogOut size={14} />
+                <LogOut size={16} />
                 <span>Salir</span>
               </button>
             </div>
@@ -293,53 +336,87 @@ export const App: React.FC = () => {
                   await deferredPrompt.userChoice;
                   setDeferredPrompt(null);
                 }}
-                className="w-full py-4 px-4 bg-emerald-500 hover:bg-emerald-400 text-gray-950 font-bold rounded-2xl mb-6 shadow-[0_4px_20px_rgba(16,185,129,0.3)] transition-all flex items-center justify-center gap-2"
+                style={{
+                  width: '100%',
+                  backgroundColor: '#10B981',
+                  color: '#000000',
+                  fontFamily: "'Pixelify Sans', monospace",
+                  fontWeight: 700,
+                  fontSize: '16px',
+                  padding: '16px',
+                  borderRadius: '20px',
+                  marginBottom: '28px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '10px',
+                  border: 'none',
+                  boxShadow: '0 4px 20px rgba(16, 185, 129, 0.3)',
+                  cursor: 'pointer'
+                }}
               >
-                <Download size={18} />
-                <span>Instalar App en Celular</span>
+                <Download size={20} />
+                <span>INSTALAR APP EN CELULAR</span>
               </button>
             )}
 
             {saveSuccess && (
-              <div className="bg-emerald-950/60 border border-emerald-500/30 text-emerald-300 rounded-2xl p-4 text-sm font-semibold flex items-center gap-2.5 mb-5">
-                <CheckCircle2 size={18} className="text-emerald-400" />
+              <div style={{ backgroundColor: 'rgba(16,185,129,0.15)', border: '1px solid #10B981', color: '#10B981', borderRadius: '16px', padding: '14px 16px', fontSize: '15px', fontFamily: "'Pixelify Sans', monospace", fontWeight: 700, display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '24px' }}>
+                <CheckCircle2 size={20} />
                 <span>Configuración guardada exitosamente.</span>
               </div>
             )}
 
             {/* Profile Settings Form */}
-            <form onSubmit={handleProfileSave} className="flex flex-col gap-5">
+            <form onSubmit={handleProfileSave} style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
               <div>
-                <label className="block text-xs font-semibold text-stone-400 uppercase tracking-wider mb-2">
-                  Presupuesto Total Mensual ($)
+                <label style={{ display: 'block', fontFamily: "'Pixelify Sans', monospace", fontSize: '14px', fontWeight: 700, color: 'rgba(255,255,255,0.7)', marginBottom: '10px', letterSpacing: '0.04em' }}>
+                  PRESUPUESTO TOTAL MENSUAL ($)
                 </label>
                 <input
                   type="number"
                   value={totalBudget}
                   onChange={(e) => setTotalBudget(Number(e.target.value))}
-                  className="w-full p-4 bg-white/5 border border-white/12 rounded-2xl text-amber-300 font-extrabold text-xl outline-none focus:border-amber-400 transition-colors"
+                  style={{ width: '100%', height: '52px', padding: '0 16px', backgroundColor: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.15)', borderRadius: '16px', color: '#FBBF24', fontFamily: "'Pixelify Sans', monospace", fontSize: '20px', fontWeight: 700, outline: 'none' }}
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-stone-400 uppercase tracking-wider mb-2">
-                  Segundo Email Autorizado
+                <label style={{ display: 'block', fontFamily: "'Pixelify Sans', monospace", fontSize: '14px', fontWeight: 700, color: 'rgba(255,255,255,0.7)', marginBottom: '10px', letterSpacing: '0.04em' }}>
+                  SEGUNDO EMAIL AUTORIZADO
                 </label>
                 <input
                   type="email"
                   placeholder="ej: parejacompartida@gmail.com"
                   value={secondaryEmail}
                   onChange={(e) => setSecondaryEmail(e.target.value)}
-                  className="w-full p-4 bg-white/5 border border-white/12 rounded-2xl text-white font-sans text-sm outline-none focus:border-amber-400 transition-colors placeholder:text-stone-500"
+                  style={{ width: '100%', height: '52px', padding: '0 16px', backgroundColor: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.15)', borderRadius: '16px', color: '#FFFFFF', fontFamily: "'Pixelify Sans', monospace", fontSize: '16px', outline: 'none' }}
                 />
               </div>
 
               <button
                 type="submit"
-                className="w-full py-4 px-6 rounded-2xl font-bold text-gray-950 bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 shadow-[0_4px_20px_rgba(245,158,11,0.35)] transition-all scale-[1.01] active:scale-[0.98] flex items-center justify-center gap-2 mt-2"
+                style={{
+                  width: '100%',
+                  height: '54px',
+                  background: 'linear-gradient(135deg, #F59E0B 0%, #D97706 100%)',
+                  color: '#000000',
+                  fontFamily: "'Pixelify Sans', monospace",
+                  fontWeight: 700,
+                  fontSize: '18px',
+                  borderRadius: '16px',
+                  border: 'none',
+                  marginTop: '8px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '10px',
+                  boxShadow: '0 4px 18px rgba(245, 158, 11, 0.4)',
+                  cursor: 'pointer'
+                }}
               >
-                <Save size={18} />
-                <span>Guardar Cambios</span>
+                <Save size={20} />
+                <span>GUARDAR CAMBIOS</span>
               </button>
             </form>
           </div>
@@ -353,7 +430,7 @@ export const App: React.FC = () => {
           onClick={() => { soundFX.playClick(); setActiveTab('home'); }}
           className={`bottom-tab-btn ${activeTab === 'home' ? 'active' : ''}`}
         >
-          <Home size={20} />
+          <Home size={22} />
           <span>INICIO</span>
         </button>
 
@@ -361,7 +438,7 @@ export const App: React.FC = () => {
           onClick={() => { soundFX.playClick(); setActiveTab('history'); }}
           className={`bottom-tab-btn ${activeTab === 'history' ? 'active' : ''}`}
         >
-          <History size={20} />
+          <History size={22} />
           <span>HISTORIAL</span>
         </button>
 
@@ -369,7 +446,7 @@ export const App: React.FC = () => {
           onClick={() => { soundFX.playClick(); setActiveTab('profile'); }}
           className={`bottom-tab-btn ${activeTab === 'profile' ? 'active' : ''}`}
         >
-          <UserIcon size={20} />
+          <UserIcon size={22} />
           <span>PERFIL</span>
         </button>
       </nav>

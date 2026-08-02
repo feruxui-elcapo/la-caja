@@ -1,9 +1,8 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Pixelify+Sans:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Press+Start+2P&family=VT323&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;500;600;700&family=Press+Start+2P&display=swap');
 @import "tailwindcss";
 
 :root {
-  --font-sans: 'Plus Jakarta Sans', 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-pixel: 'Pixelify Sans', monospace;
+  --font-pixel: 'Pixelify Sans', 'Press Start 2P', monospace;
   --font-retro: 'Press Start 2P', monospace;
 }
 
@@ -14,15 +13,15 @@
 }
 
 html, body {
-  font-family: var(--font-sans);
-  background-color: #0b0c10;
+  font-family: var(--font-pixel);
+  background-color: #0a0a0c;
   background-image: 
     radial-gradient(circle at 50% 0%, rgba(245, 158, 11, 0.08) 0%, transparent 60%),
-    radial-gradient(circle at 80% 100%, rgba(239, 68, 68, 0.05) 0%, transparent 50%);
+    radial-gradient(circle at 80% 100%, rgba(239, 68, 68, 0.06) 0%, transparent 50%);
   color: #f3f4f6;
   min-height: 100vh;
   overflow-x: hidden;
-  padding-bottom: 96px; /* Space for fixed bottom navbar */
+  padding-bottom: 100px; /* Space for fixed bottom navbar */
   -webkit-font-smoothing: antialiased;
 }
 
@@ -32,22 +31,21 @@ html, body {
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.2);
+  background: rgba(0, 0, 0, 0.3);
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(245, 158, 11, 0.3);
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(245, 158, 11, 0.4);
+  background: rgba(245, 158, 11, 0.6);
 }
 
 /* ===== FONT UTILITIES ===== */
-.font-sans { font-family: var(--font-sans); }
 .font-pixel { font-family: var(--font-pixel); }
 .font-retro { font-family: var(--font-retro); }
 
-/* ===== THE COIN GLASS JAR ===== */
+/* ===== THE COIN GLASS JAR (Retro 8-Bit) ===== */
 .jar-outer-compact {
   display: flex;
   flex-direction: column;
@@ -59,23 +57,23 @@ html, body {
 
 /* Lid & Neck */
 .jar-lid-compact {
-  width: 80px;
-  height: 18px;
-  background: linear-gradient(180deg, #e6b87d 0%, #a67c52 50%, #6e4d2e 100%);
-  border: 2px solid rgba(0,0,0,0.6);
+  width: 84px;
+  height: 20px;
+  background: linear-gradient(180deg, #d4a373 0%, #8B5E34 60%, #5c3e1e 100%);
+  border: 2.5px solid #1a0f07;
   border-bottom: none;
-  border-radius: 10px 10px 3px 3px;
+  border-radius: 8px 8px 2px 2px;
   position: relative;
   z-index: 3;
-  box-shadow: inset 0 2px 4px rgba(255,255,255,0.4), 0 4px 10px rgba(0,0,0,0.4);
+  box-shadow: inset 0 3px 0 rgba(255,255,255,0.3), 0 4px 10px rgba(0,0,0,0.5);
 }
 
 .jar-neck-compact {
-  width: 90px;
-  height: 9px;
-  background: rgba(255,255,255,0.25);
-  border: 1.5px solid rgba(255,255,255,0.5);
-  border-radius: 3px;
+  width: 94px;
+  height: 10px;
+  background: rgba(255,255,255,0.3);
+  border: 2px solid rgba(255,255,255,0.6);
+  border-radius: 2px;
   position: relative;
   z-index: 2;
   box-shadow: 0 2px 6px rgba(0,0,0,0.3);
@@ -83,20 +81,20 @@ html, body {
 
 /* Glass Body */
 .jar-body-compact {
-  width: 142px;
-  height: 215px;
-  background: linear-gradient(135deg, rgba(255,255,255,0.16) 0%, rgba(255,255,255,0.03) 100%);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 2.5px solid rgba(255,255,255,0.45);
-  border-top: 1.5px solid rgba(255,255,255,0.35);
-  border-radius: 16px 16px 32px 32px;
+  width: 148px;
+  height: 220px;
+  background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.03) 100%);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 3px solid rgba(255,255,255,0.5);
+  border-top: 2px solid rgba(255,255,255,0.35);
+  border-radius: 16px 16px 30px 30px;
   position: relative;
   overflow: hidden;
   box-shadow:
-    inset -6px 0 16px rgba(255,255,255,0.12),
-    inset 6px 0 16px rgba(0,0,0,0.35),
-    0 16px 40px rgba(0,0,0,0.7);
+    inset -6px 0 16px rgba(255,255,255,0.1),
+    inset 6px 0 16px rgba(0,0,0,0.3),
+    0 16px 36px rgba(0,0,0,0.8);
 }
 
 /* Glass reflections */
@@ -107,7 +105,7 @@ html, body {
   left: 8px;
   width: 8px;
   height: 75%;
-  background: linear-gradient(180deg, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.1) 60%, transparent 100%);
+  background: linear-gradient(180deg, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0.08) 60%, transparent 100%);
   border-radius: 4px;
   z-index: 10;
   pointer-events: none;
@@ -119,7 +117,7 @@ html, body {
   bottom: 0;
   left: 0;
   right: 0;
-  border-radius: 0 0 28px 28px;
+  border-radius: 0 0 26px 26px;
   transition: height 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
   overflow: hidden;
   background: linear-gradient(180deg, #FBBF24 0%, #F59E0B 40%, #D97706 100%);
@@ -149,17 +147,17 @@ html, body {
   bottom: 0;
   left: 0;
   right: 0;
-  height: 74px;
-  background: rgba(15, 17, 23, 0.92);
+  height: 76px;
+  background: rgba(14, 15, 20, 0.94);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
   display: flex;
   align-items: center;
   justify-content: space-around;
   padding: 0 16px;
   z-index: 50;
-  box-shadow: 0 -10px 30px rgba(0,0,0,0.85);
+  box-shadow: 0 -10px 30px rgba(0,0,0,0.9);
 }
 
 .bottom-tab-btn {
@@ -175,23 +173,22 @@ html, body {
   border-radius: 16px;
   background: transparent;
   border: none;
-  color: #9ca3af;
-  font-family: var(--font-sans);
+  color: #78716C;
+  font-family: var(--font-pixel);
   font-size: 11px;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
 .bottom-tab-btn:hover {
-  color: #e5e7eb;
+  color: #d6d3d1;
   background: rgba(255, 255, 255, 0.05);
 }
 
 .bottom-tab-btn.active {
   color: #F59E0B;
   background: rgba(245, 158, 11, 0.14);
-  box-shadow: inset 0 0 12px rgba(245, 158, 11, 0.15);
 }
 
 .bottom-tab-btn.active svg {
@@ -201,10 +198,10 @@ html, body {
 
 /* Button style */
 .btn-pixel {
-  font-family: var(--font-sans);
-  font-size: 0.875rem;
+  font-family: var(--font-pixel);
+  font-size: 15px;
   font-weight: 700;
-  min-height: 48px;
+  min-height: 50px;
   border-radius: 16px;
   border: 1px solid rgba(255, 255, 255, 0.15);
   cursor: pointer;
@@ -226,25 +223,25 @@ html, body {
 .modal-bg {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.85);
+  background: rgba(0, 0, 0, 0.88);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   z-index: 100;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 16px;
+  padding: 20px;
   animation: fadeIn 0.2s ease-out;
 }
 
 .modal-box {
-  background: linear-gradient(165deg, #161822 0%, #0d0e15 100%);
-  border: 1px solid rgba(245, 158, 11, 0.25);
+  background: #121319;
+  border: 2px solid #F59E0B;
   box-shadow: 
     0 25px 60px rgba(0, 0, 0, 0.95),
-    0 0 40px rgba(245, 158, 11, 0.12);
+    0 0 35px rgba(245, 158, 11, 0.2);
   border-radius: 28px;
-  padding: 28px;
+  padding: 32px 28px;
   width: 100%;
   max-width: 440px;
   animation: modalSlideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);

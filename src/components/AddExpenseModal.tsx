@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import type { Jar } from '../types';
-import { X, Minus, Sparkles, AlertCircle } from 'lucide-react';
+import { X, Minus, AlertCircle } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { soundFX } from '../utils/audio';
 
@@ -20,13 +20,11 @@ export const AddExpenseModal: React.FC<AddExpenseModalProps> = ({
   const [selectedJarId, setSelectedJarId] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const [notice, setNotice] = useState('');
 
   // Sync selectedJarId whenever modal opens or jars change
   useEffect(() => {
     if (isOpen) {
       setError('');
-      setNotice('');
       if (preselectedJarId && jars.some(j => j.id === preselectedJarId)) {
         setSelectedJarId(preselectedJarId);
       } else if (jars.length > 0) {
@@ -40,21 +38,20 @@ export const AddExpenseModal: React.FC<AddExpenseModalProps> = ({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
-    setNotice('');
 
     // Normalize comma to dot for decimal inputs
     const cleanAmountStr = amount.replace(',', '.').replace(/[^0-9.]/g, '');
     const num = parseFloat(cleanAmountStr);
 
-    if (!description.trim()) { setError('Por favor indicá en qué gastaste.'); return; }
-    if (isNaN(num) || num <= 0) { setError('Por favor ingresá un monto válido mayor a 0.'); return; }
+    if (!description.trim()) { setError('Por favor indicá qué gastaste.'); return; }
+    if (isNaN(num) || num <= 0) { setError('Por favor ingresá un monto mayor a 0.'); return; }
     
     const jar = jars.find(j => j.id === selectedJarId) || jars[0];
     if (!jar) { setError('Elegí un frasco para descontar.'); return; }
 
     try {
       setLoading(true);
-      const res = await onAddExpense(description.trim(), num, jar.id, jar.name);
+      await onAddExpense(description.trim(), num, jar.id, jar.name);
       
       soundFX.playCoinDeduct();
       confetti({ particleCount: 30, spread: 70, origin: { y: 0.7 }, colors: ['#EF4444', '#F59E0B', '#10B981'] });
@@ -62,16 +59,10 @@ export const AddExpenseModal: React.FC<AddExpenseModalProps> = ({
       setDescription(''); 
       setAmount(''); 
       setLoading(false);
-
-      if (res && res.isLocalOnly) {
-        // Subtle feedback if Firestore had permissions issue but local save succeeded
-        onClose();
-      } else {
-        onClose();
-      }
+      onClose();
     } catch (err: any) {
       console.error("Error al guardar gasto:", err);
-      setError(err?.message ? `Error: ${err.message}` : 'Ocurrió un problema al registrar el gasto.');
+      setError(err?.message ? `Error: ${err.message}` : 'No se pudo guardar el gasto.');
       setLoading(false);
     }
   };
@@ -79,46 +70,67 @@ export const AddExpenseModal: React.FC<AddExpenseModalProps> = ({
   return (
     <div className="modal-bg" onClick={onClose}>
       <div className="modal-box" onClick={e => e.stopPropagation()}>
+        
         {/* Header */}
-        <div className="flex justify-between items-center mb-6">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-red-500/15 border border-red-500/30 flex items-center justify-center text-red-400 shadow-[0_0_15px_rgba(239,68,68,0.2)]">
-              <Minus size={20} strokeWidth={2.5} />
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '28px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <div style={{
+              width: '42px',
+              height: '42px',
+              borderRadius: '14px',
+              backgroundColor: 'rgba(239, 68, 68, 0.15)',
+              border: '1px solid rgba(239, 68, 68, 0.3)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              color: '#EF4444'
+            }}>
+              <Minus size={22} strokeWidth={3} />
             </div>
             <div>
-              <h3 className="font-sans font-bold text-xl text-white tracking-tight">Anotar Gasto</h3>
-              <p className="font-sans text-xs text-stone-400">Restá saldo de tus frascos</p>
+              <h3 style={{ fontFamily: "'Pixelify Sans', monospace", fontWeight: 700, fontSize: '20px', color: '#FFFFFF', margin: 0, letterSpacing: '0.02em' }}>
+                Anotar Gasto
+              </h3>
+              <p style={{ fontFamily: "'Pixelify Sans', monospace", fontSize: '13px', color: 'rgba(255,255,255,0.5)', margin: 0 }}>
+                Restá saldo de tus frascos
+              </p>
             </div>
           </div>
           <button 
             onClick={onClose} 
-            className="w-9 h-9 rounded-full flex items-center justify-center text-stone-400 hover:text-white hover:bg-white/10 transition-colors"
+            style={{
+              width: '36px',
+              height: '36px',
+              borderRadius: '50%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              color: 'rgba(255,255,255,0.4)',
+              background: 'transparent',
+              border: 'none',
+              cursor: 'pointer',
+              transition: 'all 0.2s ease'
+            }}
           >
             <X size={20} />
           </button>
         </div>
 
         {error && (
-          <div className="flex items-start gap-2.5 text-red-300 font-sans text-sm mb-5 bg-red-950/60 border border-red-500/30 rounded-2xl p-3.5 leading-relaxed">
-            <AlertCircle size={18} className="text-red-400 shrink-0 mt-0.5" />
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', color: '#FCA5A5', backgroundColor: 'rgba(153, 27, 27, 0.6)', border: '1px solid rgba(239, 68, 68, 0.4)', borderRadius: '16px', padding: '14px', marginBottom: '24px', fontSize: '14px', fontFamily: "'Pixelify Sans', monospace" }}>
+            <AlertCircle size={18} style={{ color: '#EF4444', shrink: 0 }} />
             <span>{error}</span>
           </div>
         )}
 
-        {notice && (
-          <div className="flex items-start gap-2.5 text-amber-300 font-sans text-sm mb-5 bg-amber-950/60 border border-amber-500/30 rounded-2xl p-3.5 leading-relaxed">
-            <Sparkles size={18} className="text-amber-400 shrink-0 mt-0.5" />
-            <span>{notice}</span>
-          </div>
-        )}
-
-        <form onSubmit={handleSubmit} className="space-y-5">
-          {/* Jar selector */}
-          <div>
-            <p className="font-sans text-xs font-semibold text-amber-400/90 mb-2.5 uppercase tracking-wider">
-              Elegí el frasco
-            </p>
-            <div className="grid grid-cols-2 gap-3">
+        <form onSubmit={handleSubmit}>
+          
+          {/* SECTION 1: Jar selector */}
+          <div style={{ marginBottom: '24px' }}>
+            <label style={{ display: 'block', fontFamily: "'Pixelify Sans', monospace", fontSize: '14px', fontWeight: 700, color: '#FBBF24', marginBottom: '10px', letterSpacing: '0.05em' }}>
+              ELEGÍ EL FRASCO
+            </label>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
               {jars.map(jar => {
                 const isSelected = jar.id === selectedJarId;
                 return (
@@ -126,69 +138,154 @@ export const AddExpenseModal: React.FC<AddExpenseModalProps> = ({
                     key={jar.id}
                     type="button"
                     onClick={() => { soundFX.playClick(); setSelectedJarId(jar.id); }}
-                    className={`py-3.5 px-4 rounded-2xl font-sans transition-all flex flex-col items-center justify-center gap-1 ${
-                      isSelected
-                        ? 'bg-gradient-to-r from-amber-500/25 to-amber-600/15 text-amber-300 border-2 border-amber-400 shadow-[0_4px_16px_rgba(245,158,11,0.25)] scale-[1.02]'
-                        : 'bg-white/5 text-stone-300 border border-white/10 hover:border-amber-500/40 hover:bg-white/10'
-                    }`}
+                    style={{
+                      padding: '14px 16px',
+                      borderRadius: '16px',
+                      fontFamily: "'Pixelify Sans', monospace",
+                      fontSize: '16px',
+                      fontWeight: 700,
+                      cursor: 'pointer',
+                      transition: 'all 0.2s ease',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      gap: '8px',
+                      backgroundColor: isSelected ? 'rgba(245, 158, 11, 0.2)' : 'rgba(255, 255, 255, 0.05)',
+                      color: isSelected ? '#FDE047' : 'rgba(255, 255, 255, 0.7)',
+                      border: isSelected ? '2px solid #F59E0B' : '1px solid rgba(255, 255, 255, 0.12)',
+                      boxShadow: isSelected ? '0 4px 16px rgba(245, 158, 11, 0.3)' : 'none',
+                      transform: isSelected ? 'scale(1.02)' : 'none'
+                    }}
                   >
-                    <span className="font-bold text-sm tracking-wide">{jar.name}</span>
+                    <span>{jar.name}</span>
                   </button>
                 );
               })}
             </div>
           </div>
 
-          {/* Description */}
-          <div>
-            <p className="font-sans text-xs font-semibold text-stone-400 mb-2 uppercase tracking-wider">
-              Concepto / Detalle
-            </p>
+          {/* SECTION 2: Description */}
+          <div style={{ marginBottom: '24px' }}>
+            <label style={{ display: 'block', fontFamily: "'Pixelify Sans', monospace", fontSize: '14px', fontWeight: 700, color: 'rgba(255,255,255,0.7)', marginBottom: '10px', letterSpacing: '0.05em' }}>
+              CONCEPTO / DETALLE
+            </label>
             <input
               type="text"
               placeholder="Ej: Supermercado, Farmacia, Cena..."
               value={description}
               onChange={e => setDescription(e.target.value)}
-              className="w-full px-4 py-3.5 bg-white/5 border border-white/12 rounded-2xl text-white font-sans text-base focus:outline-none focus:border-amber-400 focus:ring-2 focus:ring-amber-400/20 transition-all placeholder:text-stone-500"
+              style={{
+                width: '100%',
+                height: '52px',
+                padding: '0 16px',
+                backgroundColor: 'rgba(255, 255, 255, 0.06)',
+                border: '1px solid rgba(255, 255, 255, 0.15)',
+                borderRadius: '16px',
+                color: '#FFFFFF',
+                fontFamily: "'Pixelify Sans', monospace",
+                fontSize: '16px',
+                outline: 'none',
+                transition: 'border-color 0.2s'
+              }}
               autoFocus
             />
           </div>
 
-          {/* Amount */}
-          <div>
-            <p className="font-sans text-xs font-semibold text-stone-400 mb-2 uppercase tracking-wider">
-              Monto ($)
-            </p>
-            <div className="relative flex items-center">
-              <span className="absolute left-4 text-emerald-400 font-bold text-xl pointer-events-none">$</span>
+          {/* SECTION 3: Amount Input with Explicit Fixed Padding */}
+          <div style={{ marginBottom: '28px' }}>
+            <label style={{ display: 'block', fontFamily: "'Pixelify Sans', monospace", fontSize: '14px', fontWeight: 700, color: 'rgba(255,255,255,0.7)', marginBottom: '10px', letterSpacing: '0.05em' }}>
+              MONTO ($)
+            </label>
+            <div style={{ position: 'relative', width: '100%' }}>
+              <span 
+                style={{ 
+                  position: 'absolute', 
+                  left: '16px', 
+                  top: '50%', 
+                  transform: 'translateY(-50%)', 
+                  color: '#10B981', 
+                  fontFamily: "'Pixelify Sans', monospace",
+                  fontSize: '22px', 
+                  fontWeight: 700, 
+                  pointerEvents: 'none',
+                  zIndex: 2
+                }}
+              >
+                $
+              </span>
               <input
                 type="number"
                 step="any"
                 placeholder="0"
                 value={amount}
                 onChange={e => setAmount(e.target.value)}
-                className="w-full pl-12 pr-4 py-3.5 bg-white/5 border border-white/12 rounded-2xl text-emerald-400 font-sans font-bold text-2xl focus:outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-400/20 transition-all placeholder:text-stone-600"
+                style={{
+                  width: '100%',
+                  height: '54px',
+                  paddingLeft: '48px', // Explicit 48px padding guarantees ZERO overlap with $
+                  paddingRight: '16px',
+                  backgroundColor: 'rgba(255, 255, 255, 0.06)',
+                  border: '1px solid rgba(255, 255, 255, 0.15)',
+                  borderRadius: '16px',
+                  color: '#10B981',
+                  fontFamily: "'Pixelify Sans', monospace",
+                  fontSize: '22px',
+                  fontWeight: 700,
+                  outline: 'none'
+                }}
               />
             </div>
           </div>
 
-          {/* Action buttons */}
-          <div className="flex gap-3 pt-3">
+          {/* SECTION 4: Action buttons with Generous Gaps */}
+          <div style={{ display: 'flex', gap: '14px', paddingTop: '8px' }}>
             <button 
               type="button" 
               onClick={onClose} 
-              className="py-3.5 px-5 rounded-2xl font-semibold text-stone-300 bg-white/8 hover:bg-white/14 border border-white/10 transition-all flex-1"
+              style={{
+                flex: 1,
+                height: '52px',
+                borderRadius: '16px',
+                fontFamily: "'Pixelify Sans', monospace",
+                fontWeight: 700,
+                fontSize: '16px',
+                color: 'rgba(255,255,255,0.8)',
+                backgroundColor: 'rgba(255,255,255,0.08)',
+                border: '1px solid rgba(255,255,255,0.12)',
+                cursor: 'pointer',
+                transition: 'all 0.2s ease'
+              }}
             >
               Cancelar
             </button>
+
             <button 
               type="submit" 
               disabled={loading} 
-              className="py-3.5 px-5 rounded-2xl font-bold text-white bg-gradient-to-r from-red-500 via-rose-600 to-red-600 hover:from-red-400 hover:to-rose-500 shadow-[0_6px_24px_rgba(239,68,68,0.4)] transition-all scale-[1.01] active:scale-[0.98] flex-1 flex items-center justify-center gap-2"
+              style={{
+                flex: 1.2,
+                height: '52px',
+                borderRadius: '16px',
+                fontFamily: "'Pixelify Sans', monospace",
+                fontWeight: 700,
+                fontSize: '16px',
+                color: '#FFFFFF',
+                background: 'linear-gradient(135deg, #EF4444 0%, #DC2626 100%)',
+                border: 'none',
+                boxShadow: '0 4px 16px rgba(239, 68, 68, 0.4)',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '8px',
+                transition: 'all 0.2s ease'
+              }}
             >
-              {loading ? 'Guardando...' : '- Restar Gasto'}
+              <Minus size={18} strokeWidth={3} />
+              <span>{loading ? 'Guardando...' : 'Restar Gasto'}</span>
             </button>
           </div>
+
         </form>
       </div>
     </div>
