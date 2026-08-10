@@ -52,7 +52,7 @@ export const GlassJar: React.FC<GlassJarProps> = ({ jar, spentAmount, onDeductCl
           border: `1px solid ${pctBorder}`,
           padding: '3px 12px',
           borderRadius: '20px',
-          marginBottom: '8px',
+          marginBottom: '10px',
           userSelect: 'none',
           boxShadow: '0 2px 8px rgba(0,0,0,0.3)',
           letterSpacing: '0.04em'
@@ -72,12 +72,12 @@ export const GlassJar: React.FC<GlassJarProps> = ({ jar, spentAmount, onDeductCl
             <div 
               style={{
                 position: 'absolute',
-                top: '4px',
+                top: '5px',
                 left: 0,
                 right: 0,
                 display: 'flex',
                 justifyContent: 'space-around',
-                fontSize: '10px',
+                fontSize: '11px',
                 pointerEvents: 'none',
                 opacity: 0.9,
                 filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.4))'
@@ -109,7 +109,7 @@ export const GlassJar: React.FC<GlassJarProps> = ({ jar, spentAmount, onDeductCl
               alignItems: 'center', 
               gap: '5px',
               backgroundColor: 'rgba(0,0,0,0.65)', 
-              padding: '2px 8px', 
+              padding: '3px 9px', 
               borderRadius: '10px', 
               border: '1px solid rgba(255,255,255,0.2)',
               marginBottom: '4px'
@@ -134,7 +134,7 @@ export const GlassJar: React.FC<GlassJarProps> = ({ jar, spentAmount, onDeductCl
           <span 
             className="font-arcade"
             style={{ 
-              fontSize: '22px', 
+              fontSize: '23px', 
               fontWeight: 700,
               color: '#FEF08A', 
               textShadow: '0 2px 8px rgba(0,0,0,0.95)',
@@ -165,9 +165,9 @@ export const GlassJar: React.FC<GlassJarProps> = ({ jar, spentAmount, onDeductCl
         onClick={() => { soundFX.playClick(); onDeductClick(jar); }}
         style={{
           width: '100%',
-          marginTop: '12px',
-          padding: '10px 12px',
-          borderRadius: '14px',
+          marginTop: '16px',
+          padding: '11px 14px',
+          borderRadius: '15px',
           fontFamily: 'var(--font-sans)',
           fontSize: '14px',
           fontWeight: 700,

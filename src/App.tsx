@@ -181,7 +181,7 @@ export const App: React.FC = () => {
     <div style={{ minHeight: '100vh', backgroundColor: '#0a0a0c', color: '#f3f4f6', display: 'flex', flexDirection: 'column', fontFamily: "'Pixelify Sans', monospace" }}>
       
       {/* MAIN CONTAINER */}
-      <main style={{ flex: 1, maxWidth: '480px', width: '100%', margin: '0 auto', padding: activeTab === 'home' ? '12px 16px' : '24px 16px' }}>
+      <main style={{ flex: 1, maxWidth: '480px', width: '100%', margin: '0 auto', padding: activeTab === 'home' ? '20px 16px' : '24px 16px' }}>
 
         {/* TAB 1: INICIO */}
         {activeTab === 'home' && (

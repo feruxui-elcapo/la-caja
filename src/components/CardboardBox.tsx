@@ -30,34 +30,34 @@ export const CardboardBox: React.FC<CardboardBoxProps> = ({
 
   return (
     <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-      {/* Total Available Money Banner Card (Compact Single-Screen) */}
+      {/* Total Available Money Banner Card */}
       <div 
         style={{
           width: '100%',
-          maxWidth: '380px',
-          marginBottom: '14px',
-          padding: '12px 14px',
-          borderRadius: '18px',
+          maxWidth: '400px',
+          marginBottom: '24px',
+          padding: '18px 20px',
+          borderRadius: '22px',
           backgroundColor: 'rgba(245, 158, 11, 0.08)',
           border: '1.5px solid rgba(245, 158, 11, 0.25)',
           backdropFilter: 'blur(10px)',
           textAlign: 'center',
-          boxShadow: '0 8px 24px rgba(0,0,0,0.5)'
+          boxShadow: '0 10px 28px rgba(0,0,0,0.55)'
         }}
       >
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', marginBottom: '2px', color: '#FBBF24' }}>
-          <Wallet size={14} />
-          <span className="font-pixel" style={{ fontSize: '13px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em', color: '#FBBF24' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', marginBottom: '4px', color: '#FBBF24' }}>
+          <Wallet size={16} />
+          <span className="font-pixel" style={{ fontSize: '14px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em', color: '#FBBF24' }}>
             DINERO DISPONIBLE EN FRASCOS
           </span>
-          <Sparkles size={14} style={{ color: '#FBBF24' }} />
+          <Sparkles size={15} style={{ color: '#FBBF24' }} />
         </div>
 
-        <p className="font-arcade" style={{ fontWeight: 700, fontSize: '32px', color: '#FDE047', margin: '2px 0', textShadow: '0 2px 10px rgba(245,158,11,0.4)', letterSpacing: '0.04em' }}>
+        <p className="font-arcade" style={{ fontWeight: 700, fontSize: '38px', color: '#FDE047', margin: '4px 0', textShadow: '0 2px 12px rgba(245,158,11,0.4)', letterSpacing: '0.04em' }}>
           {fmt(totalRemaining)}
         </p>
 
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', fontSize: '12px', fontFamily: 'var(--font-sans)', fontWeight: 500, color: 'rgba(255,255,255,0.7)', marginTop: '4px', paddingTop: '6px', borderTop: '1px solid rgba(255,255,255,0.08)' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px', fontSize: '13px', fontFamily: 'var(--font-sans)', fontWeight: 500, color: 'rgba(255,255,255,0.7)', marginTop: '8px', paddingTop: '8px', borderTop: '1px solid rgba(255,255,255,0.08)' }}>
           <span>Presupuesto: <strong style={{ color: '#FFFFFF', fontWeight: 700 }}>{fmt(totalBudget)}</strong></span>
           <span>•</span>
           <span>Gastado: <strong style={{ color: '#F87171', fontWeight: 700 }}>{fmt(totalSpent)}</strong></span>
@@ -72,8 +72,8 @@ export const CardboardBox: React.FC<CardboardBoxProps> = ({
           justifyContent: 'center',
           alignItems: 'flex-end',
           width: '100%',
-          maxWidth: '380px',
-          gap: '16px',
+          maxWidth: '400px',
+          gap: '22px',
           padding: '0 4px'
         }}
       >
