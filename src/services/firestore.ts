@@ -264,3 +264,39 @@ export const deleteExpense = async (expenseId: string) => {
     console.warn("Firestore deleteDoc warning (deleted from localStorage):", err);
   }
 };
+
+export const updateExpense = async (
+  expenseId: string,
+  updatedFields: Partial<Expense>
+): Promise<void> => {
+  const fieldsToSave = { ...updatedFields };
+  if (updatedFields.date) {
+    const d = new Date(updatedFields.date);
+    if (!isNaN(d.getTime())) {
+      const year = d.getFullYear();
+      const month = String(d.getMonth() + 1).padStart(2, '0');
+      fieldsToSave.monthKey = `${year}-${month}`;
+    }
+  }
+
+  // Update in localStorage
+  try {
+    const raw = localStorage.getItem(LOCAL_EXPENSES_KEY);
+    if (raw) {
+      const all: Expense[] = JSON.parse(raw);
+      const updated = all.map(e => (e.id === expenseId ? { ...e, ...fieldsToSave } : e));
+      localStorage.setItem(LOCAL_EXPENSES_KEY, JSON.stringify(updated));
+    }
+  } catch (e) {
+    console.warn('Error updating local expense:', e);
+  }
+
+  // Update in Firestore
+  try {
+    const expenseRef = doc(db, 'expenses', expenseId);
+    await updateDoc(expenseRef, fieldsToSave);
+  } catch (err) {
+    console.warn('Firestore updateDoc warning (updated in localStorage):', err);
+  }
+};
+

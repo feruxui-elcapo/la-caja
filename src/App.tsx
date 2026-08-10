@@ -8,17 +8,20 @@ import {
   subscribeToExpenses, 
   saveConfig, 
   addExpense, 
-  deleteExpense 
+  deleteExpense,
+  updateExpense
 } from './services/firestore';
 import { LoginScreen } from './components/LoginScreen';
 import { ResetCountdown } from './components/ResetCountdown';
 import { CardboardBox } from './components/CardboardBox';
 import { AddExpenseModal } from './components/AddExpenseModal';
+import { EditExpenseModal } from './components/EditExpenseModal';
 import { 
   Home, 
   History, 
   User as UserIcon, 
   Trash2, 
+  Edit3,
   Save, 
   LogOut, 
   CheckCircle2, 
@@ -40,6 +43,7 @@ export const App: React.FC = () => {
   // Navigation & Modal state
   const [activeTab, setActiveTab] = useState<Tab>('home');
   const [isAddExpenseOpen, setIsAddExpenseOpen] = useState(false);
+  const [editingExpense, setEditingExpense] = useState<Expense | null>(null);
   const [preselectedJarId, setPreselectedJarId] = useState<string | undefined>(undefined);
 
   // Profile Form state
@@ -137,6 +141,13 @@ export const App: React.FC = () => {
     );
   };
 
+  const handleUpdateExpenseSubmit = async (
+    expenseId: string,
+    updatedFields: Partial<Expense>
+  ) => {
+    await updateExpense(expenseId, updatedFields);
+  };
+
   const handleProfileSave = async (e: React.FormEvent) => {
     e.preventDefault();
     const cleanSec = secondaryEmail.trim().toLowerCase();
@@ -170,7 +181,7 @@ export const App: React.FC = () => {
     <div style={{ minHeight: '100vh', backgroundColor: '#0a0a0c', color: '#f3f4f6', display: 'flex', flexDirection: 'column', fontFamily: "'Pixelify Sans', monospace" }}>
       
       {/* MAIN CONTAINER */}
-      <main style={{ flex: 1, maxWidth: '480px', width: '100%', margin: '0 auto', padding: '24px 16px' }}>
+      <main style={{ flex: 1, maxWidth: '480px', width: '100%', margin: '0 auto', padding: activeTab === 'home' ? '12px 16px' : '24px 16px' }}>
 
         {/* TAB 1: INICIO */}
         {activeTab === 'home' && (
@@ -245,10 +256,31 @@ export const App: React.FC = () => {
                       </p>
                     </div>
 
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '14px', shrink: 0 }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px', shrink: 0 }}>
                       <span className="font-arcade" style={{ fontSize: '22px', fontWeight: 700, color: '#EF4444', letterSpacing: '0.04em' }}>
                         -{fmt(exp.amount)}
                       </span>
+                      <button
+                        onClick={() => {
+                          soundFX.playClick();
+                          setEditingExpense(exp);
+                        }}
+                        style={{
+                          background: 'rgba(245, 158, 11, 0.12)',
+                          border: '1px solid rgba(245, 158, 11, 0.3)',
+                          borderRadius: '12px',
+                          color: '#F59E0B',
+                          cursor: 'pointer',
+                          padding: '8px 10px',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          transition: 'all 0.15s ease'
+                        }}
+                        title="Editar fecha y detalles"
+                      >
+                        <Edit3 size={16} />
+                      </button>
                       <button
                         onClick={async () => {
                           if (confirm('¿Eliminar este gasto? El dinero volverá al frasco.')) {
@@ -456,6 +488,15 @@ export const App: React.FC = () => {
         jars={config.jars || []}
         preselectedJarId={preselectedJarId}
         onAddExpense={handleAddExpenseSubmit}
+      />
+
+      {/* Edit Expense Modal */}
+      <EditExpenseModal
+        isOpen={!!editingExpense}
+        onClose={() => setEditingExpense(null)}
+        expense={editingExpense}
+        jars={config.jars || []}
+        onUpdateExpense={handleUpdateExpenseSubmit}
       />
     </div>
   );

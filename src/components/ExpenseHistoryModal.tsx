@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import type { Expense, Jar } from '../types';
-import { X, Trash2 } from 'lucide-react';
+import { X, Trash2, Edit3 } from 'lucide-react';
 import { soundFX } from '../utils/audio';
 
 interface ExpenseHistoryModalProps {
@@ -9,10 +9,11 @@ interface ExpenseHistoryModalProps {
   expenses: Expense[];
   jars: Jar[];
   onDeleteExpense: (expenseId: string) => Promise<void>;
+  onEditExpense?: (expense: Expense) => void;
 }
 
 export const ExpenseHistoryModal: React.FC<ExpenseHistoryModalProps> = ({
-  isOpen, onClose, expenses, jars, onDeleteExpense
+  isOpen, onClose, expenses, jars, onDeleteExpense, onEditExpense
 }) => {
   const [deletingId, setDeletingId] = useState<string | null>(null);
 
@@ -48,9 +49,14 @@ export const ExpenseHistoryModal: React.FC<ExpenseHistoryModalProps> = ({
                 <p className="font-body text-sm font-medium text-white truncate">{exp.description}</p>
                 <p className="font-body text-xs text-white/50 mt-0.5">{exp.jarName} · {fmtDate(exp.date)} · {exp.userName || exp.userEmail?.split('@')[0]}</p>
               </div>
-              <div className="flex items-center gap-3 shrink-0 ml-3">
+              <div className="flex items-center gap-2 shrink-0 ml-3">
                 <span className="font-arcade text-lg font-bold text-red-400">-{fmt(exp.amount)}</span>
-                <button onClick={() => handleDelete(exp.id)} disabled={deletingId === exp.id} className="p-1.5 text-white/30 hover:text-red-400 transition-colors">
+                {onEditExpense && (
+                  <button onClick={() => { soundFX.playClick(); onEditExpense(exp); }} className="p-1.5 text-white/30 hover:text-amber-400 transition-colors" title="Editar gasto">
+                    <Edit3 size={15} />
+                  </button>
+                )}
+                <button onClick={() => handleDelete(exp.id)} disabled={deletingId === exp.id} className="p-1.5 text-white/30 hover:text-red-400 transition-colors" title="Eliminar gasto">
                   <Trash2 size={15} />
                 </button>
               </div>

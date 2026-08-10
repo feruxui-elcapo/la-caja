@@ -15,53 +15,50 @@ export const GlassJar: React.FC<GlassJarProps> = ({ jar, spentAmount, onDeductCl
     ? Math.max(0, Math.min(100, (remaining / jar.allocatedBudget) * 100))
     : 0;
 
-  // Chibi expression based on coins remaining
-  let chibi = '◠‿◠';
-  let chibiColor = '#F59E0B';
-  let chibiBg = 'rgba(245, 158, 11, 0.12)';
-  let chibiBorder = 'rgba(245, 158, 11, 0.35)';
+  const remainingPct = Math.round(pct);
+  let pctColor = '#10B981';
+  let pctBg = 'rgba(16, 185, 129, 0.12)';
+  let pctBorder = 'rgba(16, 185, 129, 0.35)';
 
   if (pct < 20) {
-    chibi = '> ﹏ <';
-    chibiColor = '#EF4444';
-    chibiBg = 'rgba(239, 68, 68, 0.12)';
-    chibiBorder = 'rgba(239, 68, 68, 0.35)';
+    pctColor = '#EF4444';
+    pctBg = 'rgba(239, 68, 68, 0.12)';
+    pctBorder = 'rgba(239, 68, 68, 0.35)';
   } else if (pct < 50) {
-    chibi = '• ɷ •';
-    chibiColor = '#FBBF24';
-    chibiBg = 'rgba(251, 191, 36, 0.12)';
-    chibiBorder = 'rgba(251, 191, 36, 0.35)';
+    pctColor = '#FBBF24';
+    pctBg = 'rgba(251, 191, 36, 0.12)';
+    pctBorder = 'rgba(251, 191, 36, 0.35)';
   }
 
   const fmt = (n: number) =>
     new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS', maximumFractionDigits: 0 }).format(n);
 
   const getIcon = () => {
-    if (jar.name.toLowerCase().includes('salida')) return <Coffee size={14} color="#FBBF24" />;
-    if (jar.name.toLowerCase().includes('salud')) return <Heart size={14} color="#34D399" />;
-    return <Package size={14} color="#60A5FA" />;
+    if (jar.name.toLowerCase().includes('salida')) return <Coffee size={13} color="#FBBF24" />;
+    if (jar.name.toLowerCase().includes('salud')) return <Heart size={13} color="#34D399" />;
+    return <Package size={13} color="#60A5FA" />;
   };
 
   return (
     <div className="jar-outer-compact">
-      {/* Chibi Expression Badge */}
-      {/* Chibi Expression Badge */}
+      {/* Remaining Percentage Badge */}
       <div 
         className="font-pixel"
         style={{ 
-          fontSize: '15px', 
+          fontSize: '13px', 
           fontWeight: 700,
-          color: chibiColor, 
-          backgroundColor: chibiBg,
-          border: `1px solid ${chibiBorder}`,
-          padding: '4px 14px',
+          color: pctColor, 
+          backgroundColor: pctBg,
+          border: `1px solid ${pctBorder}`,
+          padding: '3px 12px',
           borderRadius: '20px',
-          marginBottom: '12px',
+          marginBottom: '8px',
           userSelect: 'none',
-          boxShadow: '0 2px 8px rgba(0,0,0,0.3)'
+          boxShadow: '0 2px 8px rgba(0,0,0,0.3)',
+          letterSpacing: '0.04em'
         }}
       >
-        ({chibi})
+        {remainingPct}% RESTANTE
       </div>
 
       {/* Glass Jar Body with Stacked Gold Coins */}
@@ -75,12 +72,12 @@ export const GlassJar: React.FC<GlassJarProps> = ({ jar, spentAmount, onDeductCl
             <div 
               style={{
                 position: 'absolute',
-                top: '6px',
+                top: '4px',
                 left: 0,
                 right: 0,
                 display: 'flex',
                 justifyContent: 'space-around',
-                fontSize: '11px',
+                fontSize: '10px',
                 pointerEvents: 'none',
                 opacity: 0.9,
                 filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.4))'
@@ -101,7 +98,7 @@ export const GlassJar: React.FC<GlassJarProps> = ({ jar, spentAmount, onDeductCl
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
-            padding: '10px',
+            padding: '8px',
             textAlign: 'center',
             pointerEvents: 'none'
           }}
@@ -110,23 +107,23 @@ export const GlassJar: React.FC<GlassJarProps> = ({ jar, spentAmount, onDeductCl
             style={{ 
               display: 'flex', 
               alignItems: 'center', 
-              gap: '6px',
-              backgroundColor: 'rgba(0,0,0,0.6)', 
-              padding: '3px 10px', 
-              borderRadius: '12px', 
+              gap: '5px',
+              backgroundColor: 'rgba(0,0,0,0.65)', 
+              padding: '2px 8px', 
+              borderRadius: '10px', 
               border: '1px solid rgba(255,255,255,0.2)',
-              marginBottom: '6px'
+              marginBottom: '4px'
             }}
           >
             {getIcon()}
             <span 
               className="font-pixel"
               style={{ 
-                fontSize: '14px', 
+                fontSize: '13px', 
                 fontWeight: 700,
                 color: '#FFFFFF', 
                 textTransform: 'uppercase',
-                letterSpacing: '0.05em',
+                letterSpacing: '0.04em',
                 textShadow: '0 2px 4px rgba(0,0,0,0.95)'
               }}
             >
@@ -137,12 +134,12 @@ export const GlassJar: React.FC<GlassJarProps> = ({ jar, spentAmount, onDeductCl
           <span 
             className="font-arcade"
             style={{ 
-              fontSize: '24px', 
+              fontSize: '22px', 
               fontWeight: 700,
               color: '#FEF08A', 
               textShadow: '0 2px 8px rgba(0,0,0,0.95)',
-              marginTop: '2px',
-              letterSpacing: '0.05em'
+              marginTop: '1px',
+              letterSpacing: '0.04em'
             }}
           >
             {fmt(remaining)}
@@ -151,11 +148,11 @@ export const GlassJar: React.FC<GlassJarProps> = ({ jar, spentAmount, onDeductCl
           <span 
             style={{ 
               fontFamily: 'var(--font-sans)', 
-              fontSize: '12px', 
+              fontSize: '11px', 
               fontWeight: 500,
               color: 'rgba(255,255,255,0.85)', 
               textShadow: '0 1px 3px rgba(0,0,0,0.9)',
-              marginTop: '2px'
+              marginTop: '1px'
             }}
           >
             de {fmt(jar.allocatedBudget)}
@@ -163,21 +160,21 @@ export const GlassJar: React.FC<GlassJarProps> = ({ jar, spentAmount, onDeductCl
         </div>
       </div>
 
-      {/* Deduct Button (Single Minus Icon + Text "GASTO") */}
+      {/* Deduct Button */}
       <button
         onClick={() => { soundFX.playClick(); onDeductClick(jar); }}
         style={{
           width: '100%',
-          marginTop: '20px',
-          padding: '12px 14px',
-          borderRadius: '16px',
+          marginTop: '12px',
+          padding: '10px 12px',
+          borderRadius: '14px',
           fontFamily: 'var(--font-sans)',
-          fontSize: '15px',
+          fontSize: '14px',
           fontWeight: 700,
           color: '#FFFFFF',
           background: 'linear-gradient(135deg, #EF4444 0%, #DC2626 100%)',
           border: 'none',
-          boxShadow: '0 4px 16px rgba(239, 68, 68, 0.4)',
+          boxShadow: '0 4px 14px rgba(239, 68, 68, 0.4)',
           cursor: 'pointer',
           display: 'flex',
           alignItems: 'center',
@@ -186,7 +183,7 @@ export const GlassJar: React.FC<GlassJarProps> = ({ jar, spentAmount, onDeductCl
           transition: 'all 0.2s ease'
         }}
       >
-        <Minus size={18} strokeWidth={3} />
+        <Minus size={16} strokeWidth={3} />
         <span>GASTO</span>
       </button>
     </div>
