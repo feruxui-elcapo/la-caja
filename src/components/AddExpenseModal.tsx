@@ -88,10 +88,10 @@ export const AddExpenseModal: React.FC<AddExpenseModalProps> = ({
               <Minus size={22} strokeWidth={3} />
             </div>
             <div>
-              <h3 style={{ fontFamily: "'Pixelify Sans', monospace", fontWeight: 700, fontSize: '20px', color: '#FFFFFF', margin: 0, letterSpacing: '0.02em' }}>
+              <h3 className="font-pixel" style={{ fontWeight: 700, fontSize: '20px', color: '#FFFFFF', margin: 0, letterSpacing: '0.02em' }}>
                 Anotar Gasto
               </h3>
-              <p style={{ fontFamily: "'Pixelify Sans', monospace", fontSize: '13px', color: 'rgba(255,255,255,0.5)', margin: 0 }}>
+              <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.6)', margin: 0 }}>
                 Restá saldo de tus frascos
               </p>
             </div>
@@ -117,7 +117,7 @@ export const AddExpenseModal: React.FC<AddExpenseModalProps> = ({
         </div>
 
         {error && (
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', color: '#FCA5A5', backgroundColor: 'rgba(153, 27, 27, 0.6)', border: '1px solid rgba(239, 68, 68, 0.4)', borderRadius: '16px', padding: '14px', marginBottom: '24px', fontSize: '14px', fontFamily: "'Pixelify Sans', monospace" }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', color: '#FCA5A5', backgroundColor: 'rgba(153, 27, 27, 0.6)', border: '1px solid rgba(239, 68, 68, 0.4)', borderRadius: '16px', padding: '14px', marginBottom: '24px', fontSize: '14px' }}>
             <AlertCircle size={18} style={{ color: '#EF4444', shrink: 0 }} />
             <span>{error}</span>
           </div>
@@ -127,7 +127,7 @@ export const AddExpenseModal: React.FC<AddExpenseModalProps> = ({
           
           {/* SECTION 1: Jar selector */}
           <div style={{ marginBottom: '24px' }}>
-            <label style={{ display: 'block', fontFamily: "'Pixelify Sans', monospace", fontSize: '14px', fontWeight: 700, color: '#FBBF24', marginBottom: '10px', letterSpacing: '0.05em' }}>
+            <label style={{ display: 'block', fontSize: '13px', fontWeight: 700, color: '#FBBF24', marginBottom: '10px', letterSpacing: '0.05em' }}>
               ELEGÍ EL FRASCO
             </label>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
@@ -141,8 +141,7 @@ export const AddExpenseModal: React.FC<AddExpenseModalProps> = ({
                     style={{
                       padding: '14px 16px',
                       borderRadius: '16px',
-                      fontFamily: "'Pixelify Sans', monospace",
-                      fontSize: '16px',
+                      fontSize: '15px',
                       fontWeight: 700,
                       cursor: 'pointer',
                       transition: 'all 0.2s ease',
@@ -166,7 +165,7 @@ export const AddExpenseModal: React.FC<AddExpenseModalProps> = ({
 
           {/* SECTION 2: Description */}
           <div style={{ marginBottom: '24px' }}>
-            <label style={{ display: 'block', fontFamily: "'Pixelify Sans', monospace", fontSize: '14px', fontWeight: 700, color: 'rgba(255,255,255,0.7)', marginBottom: '10px', letterSpacing: '0.05em' }}>
+            <label style={{ display: 'block', fontSize: '13px', fontWeight: 700, color: 'rgba(255,255,255,0.7)', marginBottom: '10px', letterSpacing: '0.05em' }}>
               CONCEPTO / DETALLE
             </label>
             <input
@@ -182,8 +181,8 @@ export const AddExpenseModal: React.FC<AddExpenseModalProps> = ({
                 border: '1px solid rgba(255, 255, 255, 0.15)',
                 borderRadius: '16px',
                 color: '#FFFFFF',
-                fontFamily: "'Pixelify Sans', monospace",
-                fontSize: '16px',
+                fontSize: '15px',
+                fontWeight: 500,
                 outline: 'none',
                 transition: 'border-color 0.2s'
               }}
@@ -193,19 +192,19 @@ export const AddExpenseModal: React.FC<AddExpenseModalProps> = ({
 
           {/* SECTION 3: Amount Input with Explicit Fixed Padding */}
           <div style={{ marginBottom: '28px' }}>
-            <label style={{ display: 'block', fontFamily: "'Pixelify Sans', monospace", fontSize: '14px', fontWeight: 700, color: 'rgba(255,255,255,0.7)', marginBottom: '10px', letterSpacing: '0.05em' }}>
+            <label style={{ display: 'block', fontSize: '13px', fontWeight: 700, color: 'rgba(255,255,255,0.7)', marginBottom: '10px', letterSpacing: '0.05em' }}>
               MONTO ($)
             </label>
             <div style={{ position: 'relative', width: '100%' }}>
               <span 
+                className="font-arcade"
                 style={{ 
                   position: 'absolute', 
                   left: '16px', 
                   top: '50%', 
                   transform: 'translateY(-50%)', 
                   color: '#10B981', 
-                  fontFamily: "'Pixelify Sans', monospace",
-                  fontSize: '22px', 
+                  fontSize: '26px', 
                   fontWeight: 700, 
                   pointerEvents: 'none',
                   zIndex: 2
@@ -219,17 +218,17 @@ export const AddExpenseModal: React.FC<AddExpenseModalProps> = ({
                 placeholder="0"
                 value={amount}
                 onChange={e => setAmount(e.target.value)}
+                className="font-arcade"
                 style={{
                   width: '100%',
                   height: '54px',
-                  paddingLeft: '48px', // Explicit 48px padding guarantees ZERO overlap with $
+                  paddingLeft: '44px',
                   paddingRight: '16px',
                   backgroundColor: 'rgba(255, 255, 255, 0.06)',
                   border: '1px solid rgba(255, 255, 255, 0.15)',
                   borderRadius: '16px',
                   color: '#10B981',
-                  fontFamily: "'Pixelify Sans', monospace",
-                  fontSize: '22px',
+                  fontSize: '26px',
                   fontWeight: 700,
                   outline: 'none'
                 }}
@@ -246,9 +245,8 @@ export const AddExpenseModal: React.FC<AddExpenseModalProps> = ({
                 flex: 1,
                 height: '52px',
                 borderRadius: '16px',
-                fontFamily: "'Pixelify Sans', monospace",
                 fontWeight: 700,
-                fontSize: '16px',
+                fontSize: '15px',
                 color: 'rgba(255,255,255,0.8)',
                 backgroundColor: 'rgba(255,255,255,0.08)',
                 border: '1px solid rgba(255,255,255,0.12)',
@@ -266,9 +264,8 @@ export const AddExpenseModal: React.FC<AddExpenseModalProps> = ({
                 flex: 1.2,
                 height: '52px',
                 borderRadius: '16px',
-                fontFamily: "'Pixelify Sans', monospace",
                 fontWeight: 700,
-                fontSize: '16px',
+                fontSize: '15px',
                 color: '#FFFFFF',
                 background: 'linear-gradient(135deg, #EF4444 0%, #DC2626 100%)',
                 border: 'none',

@@ -188,7 +188,7 @@ export const App: React.FC = () => {
         {/* TAB 2: HISTORIAL DE GASTOS */}
         {activeTab === 'history' && (
           <div>
-            <h2 style={{ fontFamily: "'Pixelify Sans', monospace", fontWeight: 700, fontSize: '22px', color: '#F59E0B', marginBottom: '20px', textAlign: 'center', letterSpacing: '0.04em' }}>
+            <h2 className="font-pixel" style={{ fontWeight: 700, fontSize: '24px', color: '#F59E0B', marginBottom: '20px', textAlign: 'center', letterSpacing: '0.04em' }}>
               Historial de Gastos
             </h2>
 
@@ -209,8 +209,8 @@ export const App: React.FC = () => {
                   border: '1px solid rgba(255,255,255,0.12)',
                   borderRadius: '16px',
                   color: '#FFFFFF',
-                  fontFamily: "'Pixelify Sans', monospace",
-                  fontSize: '16px',
+                  fontSize: '15px',
+                  fontWeight: 500,
                   outline: 'none'
                 }}
               />
@@ -219,7 +219,7 @@ export const App: React.FC = () => {
             {/* Expenses List */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
               {filteredExpenses.length === 0 ? (
-                <div style={{ textAlign: 'center', color: 'rgba(255,255,255,0.4)', fontFamily: "'Pixelify Sans', monospace", fontSize: '15px', padding: '48px 0', backgroundColor: 'rgba(255,255,255,0.03)', borderRadius: '16px', border: '1px solid rgba(255,255,255,0.06)' }}>
+                <div style={{ textAlign: 'center', color: 'rgba(255,255,255,0.5)', fontSize: '15px', fontWeight: 500, padding: '48px 0', backgroundColor: 'rgba(255,255,255,0.03)', borderRadius: '16px', border: '1px solid rgba(255,255,255,0.06)' }}>
                   Sin gastos registrados este mes.
                 </div>
               ) : (
@@ -237,16 +237,16 @@ export const App: React.FC = () => {
                     }}
                   >
                     <div style={{ minWidth: 0, flex: 1, paddingRight: '12px' }}>
-                      <p style={{ fontFamily: "'Pixelify Sans', monospace", fontSize: '17px', fontWeight: 700, color: '#FFFFFF', margin: 0 }}>
+                      <p style={{ fontSize: '16px', fontWeight: 600, color: '#FFFFFF', margin: 0 }}>
                         {exp.description}
                       </p>
-                      <p style={{ fontFamily: "'Pixelify Sans', monospace", fontSize: '13px', color: 'rgba(255,255,255,0.5)', marginTop: '4px', margin: 0 }}>
+                      <p style={{ fontSize: '13px', fontWeight: 500, color: 'rgba(255,255,255,0.5)', marginTop: '4px', margin: 0 }}>
                         <span style={{ color: '#FBBF24', fontWeight: 700 }}>{exp.jarName}</span> · {fmtDate(exp.date)}
                       </p>
                     </div>
 
                     <div style={{ display: 'flex', alignItems: 'center', gap: '14px', shrink: 0 }}>
-                      <span style={{ fontFamily: "'Pixelify Sans', monospace", fontSize: '17px', fontWeight: 700, color: '#EF4444' }}>
+                      <span className="font-arcade" style={{ fontSize: '22px', fontWeight: 700, color: '#EF4444', letterSpacing: '0.04em' }}>
                         -{fmt(exp.amount)}
                       </span>
                       <button
@@ -283,7 +283,7 @@ export const App: React.FC = () => {
         {/* TAB 3: PERFIL Y AJUSTES */}
         {activeTab === 'profile' && (
           <div>
-            <h2 style={{ fontFamily: "'Pixelify Sans', monospace", fontWeight: 700, fontSize: '22px', color: '#F59E0B', marginBottom: '24px', textAlign: 'center', letterSpacing: '0.04em' }}>
+            <h2 className="font-pixel" style={{ fontWeight: 700, fontSize: '24px', color: '#F59E0B', marginBottom: '24px', textAlign: 'center', letterSpacing: '0.04em' }}>
               Perfil y Ajustes
             </h2>
 
@@ -297,10 +297,10 @@ export const App: React.FC = () => {
                 </div>
               )}
               <div style={{ flex: 1, minWidth: 0 }}>
-                <p style={{ fontFamily: "'Pixelify Sans', monospace", fontSize: '18px', fontWeight: 700, color: '#FFFFFF', margin: 0, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                <p style={{ fontSize: '17px', fontWeight: 700, color: '#FFFFFF', margin: 0, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                   {user.displayName || user.email?.split('@')[0]}
                 </p>
-                <p style={{ fontFamily: "'Pixelify Sans', monospace", fontSize: '14px', color: 'rgba(255,255,255,0.5)', marginTop: '4px', margin: 0, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                <p style={{ fontSize: '13px', fontWeight: 500, color: 'rgba(255,255,255,0.5)', marginTop: '4px', margin: 0, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                   {user.email}
                 </p>
               </div>
@@ -317,7 +317,6 @@ export const App: React.FC = () => {
                   alignItems: 'center',
                   gap: '6px',
                   fontSize: '14px',
-                  fontFamily: "'Pixelify Sans', monospace",
                   fontWeight: 700
                 }}
                 title="Cerrar Sesión"
@@ -340,7 +339,6 @@ export const App: React.FC = () => {
                   width: '100%',
                   backgroundColor: '#10B981',
                   color: '#000000',
-                  fontFamily: "'Pixelify Sans', monospace",
                   fontWeight: 700,
                   fontSize: '16px',
                   padding: '16px',
@@ -361,7 +359,7 @@ export const App: React.FC = () => {
             )}
 
             {saveSuccess && (
-              <div style={{ backgroundColor: 'rgba(16,185,129,0.15)', border: '1px solid #10B981', color: '#10B981', borderRadius: '16px', padding: '14px 16px', fontSize: '15px', fontFamily: "'Pixelify Sans', monospace", fontWeight: 700, display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '24px' }}>
+              <div style={{ backgroundColor: 'rgba(16,185,129,0.15)', border: '1px solid #10B981', color: '#10B981', borderRadius: '16px', padding: '14px 16px', fontSize: '15px', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '24px' }}>
                 <CheckCircle2 size={20} />
                 <span>Configuración guardada exitosamente.</span>
               </div>
@@ -370,19 +368,20 @@ export const App: React.FC = () => {
             {/* Profile Settings Form */}
             <form onSubmit={handleProfileSave} style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
               <div>
-                <label style={{ display: 'block', fontFamily: "'Pixelify Sans', monospace", fontSize: '14px', fontWeight: 700, color: 'rgba(255,255,255,0.7)', marginBottom: '10px', letterSpacing: '0.04em' }}>
+                <label style={{ display: 'block', fontSize: '13px', fontWeight: 700, color: '#FBBF24', marginBottom: '10px', letterSpacing: '0.04em' }}>
                   PRESUPUESTO TOTAL MENSUAL ($)
                 </label>
                 <input
                   type="number"
                   value={totalBudget}
                   onChange={(e) => setTotalBudget(Number(e.target.value))}
-                  style={{ width: '100%', height: '52px', padding: '0 16px', backgroundColor: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.15)', borderRadius: '16px', color: '#FBBF24', fontFamily: "'Pixelify Sans', monospace", fontSize: '20px', fontWeight: 700, outline: 'none' }}
+                  className="font-arcade"
+                  style={{ width: '100%', height: '52px', padding: '0 16px', backgroundColor: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.15)', borderRadius: '16px', color: '#34D399', fontSize: '24px', fontWeight: 700, outline: 'none' }}
                 />
               </div>
 
               <div>
-                <label style={{ display: 'block', fontFamily: "'Pixelify Sans', monospace", fontSize: '14px', fontWeight: 700, color: 'rgba(255,255,255,0.7)', marginBottom: '10px', letterSpacing: '0.04em' }}>
+                <label style={{ display: 'block', fontSize: '13px', fontWeight: 700, color: 'rgba(255,255,255,0.7)', marginBottom: '10px', letterSpacing: '0.04em' }}>
                   SEGUNDO EMAIL AUTORIZADO
                 </label>
                 <input
@@ -390,7 +389,7 @@ export const App: React.FC = () => {
                   placeholder="ej: parejacompartida@gmail.com"
                   value={secondaryEmail}
                   onChange={(e) => setSecondaryEmail(e.target.value)}
-                  style={{ width: '100%', height: '52px', padding: '0 16px', backgroundColor: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.15)', borderRadius: '16px', color: '#FFFFFF', fontFamily: "'Pixelify Sans', monospace", fontSize: '16px', outline: 'none' }}
+                  style={{ width: '100%', height: '52px', padding: '0 16px', backgroundColor: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.15)', borderRadius: '16px', color: '#FFFFFF', fontSize: '15px', fontWeight: 500, outline: 'none' }}
                 />
               </div>
 
@@ -401,9 +400,8 @@ export const App: React.FC = () => {
                   height: '54px',
                   background: 'linear-gradient(135deg, #F59E0B 0%, #D97706 100%)',
                   color: '#000000',
-                  fontFamily: "'Pixelify Sans', monospace",
                   fontWeight: 700,
-                  fontSize: '18px',
+                  fontSize: '17px',
                   borderRadius: '16px',
                   border: 'none',
                   marginTop: '8px',

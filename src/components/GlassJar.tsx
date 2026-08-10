@@ -45,9 +45,10 @@ export const GlassJar: React.FC<GlassJarProps> = ({ jar, spentAmount, onDeductCl
   return (
     <div className="jar-outer-compact">
       {/* Chibi Expression Badge */}
+      {/* Chibi Expression Badge */}
       <div 
+        className="font-pixel"
         style={{ 
-          fontFamily: "'Pixelify Sans', monospace", 
           fontSize: '15px', 
           fontWeight: 700,
           color: chibiColor, 
@@ -110,17 +111,17 @@ export const GlassJar: React.FC<GlassJarProps> = ({ jar, spentAmount, onDeductCl
               display: 'flex', 
               alignItems: 'center', 
               gap: '6px',
-              backgroundColor: 'rgba(0,0,0,0.5)', 
+              backgroundColor: 'rgba(0,0,0,0.6)', 
               padding: '3px 10px', 
               borderRadius: '12px', 
-              border: '1px solid rgba(255,255,255,0.15)',
+              border: '1px solid rgba(255,255,255,0.2)',
               marginBottom: '6px'
             }}
           >
             {getIcon()}
             <span 
+              className="font-pixel"
               style={{ 
-                fontFamily: "'Pixelify Sans', monospace", 
                 fontSize: '14px', 
                 fontWeight: 700,
                 color: '#FFFFFF', 
@@ -134,13 +135,14 @@ export const GlassJar: React.FC<GlassJarProps> = ({ jar, spentAmount, onDeductCl
           </div>
           
           <span 
+            className="font-arcade"
             style={{ 
-              fontFamily: "'Pixelify Sans', monospace", 
-              fontSize: '20px', 
+              fontSize: '24px', 
               fontWeight: 700,
               color: '#FEF08A', 
-              textShadow: '0 2px 6px rgba(0,0,0,0.95)',
-              marginTop: '2px'
+              textShadow: '0 2px 8px rgba(0,0,0,0.95)',
+              marginTop: '2px',
+              letterSpacing: '0.05em'
             }}
           >
             {fmt(remaining)}
@@ -148,9 +150,10 @@ export const GlassJar: React.FC<GlassJarProps> = ({ jar, spentAmount, onDeductCl
 
           <span 
             style={{ 
-              fontFamily: "'Pixelify Sans', monospace", 
-              fontSize: '13px', 
-              color: 'rgba(255,255,255,0.8)', 
+              fontFamily: 'var(--font-sans)', 
+              fontSize: '12px', 
+              fontWeight: 500,
+              color: 'rgba(255,255,255,0.85)', 
               textShadow: '0 1px 3px rgba(0,0,0,0.9)',
               marginTop: '2px'
             }}
@@ -168,8 +171,8 @@ export const GlassJar: React.FC<GlassJarProps> = ({ jar, spentAmount, onDeductCl
           marginTop: '20px',
           padding: '12px 14px',
           borderRadius: '16px',
-          fontFamily: "'Pixelify Sans', monospace",
-          fontSize: '16px',
+          fontFamily: 'var(--font-sans)',
+          fontSize: '15px',
           fontWeight: 700,
           color: '#FFFFFF',
           background: 'linear-gradient(135deg, #EF4444 0%, #DC2626 100%)',

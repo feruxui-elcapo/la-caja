@@ -1,8 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;500;600;700&family=Press+Start+2P&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Pixelify+Sans:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Press+Start+2P&family=VT323&display=swap');
 @import "tailwindcss";
 
 :root {
-  --font-pixel: 'Pixelify Sans', 'Press Start 2P', monospace;
+  --font-sans: 'Outfit', 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-pixel: 'Pixelify Sans', cursive, sans-serif;
+  --font-arcade: 'VT323', monospace;
   --font-retro: 'Press Start 2P', monospace;
 }
 
@@ -13,7 +15,7 @@
 }
 
 html, body {
-  font-family: var(--font-pixel);
+  font-family: var(--font-sans);
   background-color: #0a0a0c;
   background-image: 
     radial-gradient(circle at 50% 0%, rgba(245, 158, 11, 0.08) 0%, transparent 60%),
@@ -23,6 +25,12 @@ html, body {
   overflow-x: hidden;
   padding-bottom: 100px; /* Space for fixed bottom navbar */
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+input, select, textarea, button {
+  font-family: inherit;
 }
 
 /* Custom Scrollbars */
@@ -42,7 +50,9 @@ html, body {
 }
 
 /* ===== FONT UTILITIES ===== */
-.font-pixel { font-family: var(--font-pixel); }
+.font-sans, .font-body { font-family: var(--font-sans); }
+.font-pixel { font-family: var(--font-pixel); letter-spacing: 0.03em; }
+.font-arcade { font-family: var(--font-arcade); letter-spacing: 0.04em; }
 .font-retro { font-family: var(--font-retro); }
 
 /* ===== THE COIN GLASS JAR (Retro 8-Bit) ===== */
@@ -174,9 +184,9 @@ html, body {
   background: transparent;
   border: none;
   color: #78716C;
-  font-family: var(--font-pixel);
-  font-size: 11px;
-  font-weight: 700;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
 }

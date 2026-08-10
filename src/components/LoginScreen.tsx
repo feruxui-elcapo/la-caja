@@ -30,11 +30,11 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ user, isAuthorized, al
   // Unauthorized screen
   if (user && !isAuthorized) {
     return (
-      <div style={{ minHeight: '100vh', backgroundColor: '#0a0a0c', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '24px', fontFamily: "'Pixelify Sans', monospace" }}>
+      <div style={{ minHeight: '100vh', backgroundColor: '#0a0a0c', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '24px' }}>
         <div style={{ textAlign: 'center', maxWidth: '360px', width: '100%', padding: '32px 24px', borderRadius: '24px', backgroundColor: 'rgba(255, 255, 255, 0.04)', border: '1px solid rgba(239, 68, 68, 0.35)', boxShadow: '0 20px 50px rgba(0,0,0,0.8)' }}>
           <ShieldAlert size={48} style={{ margin: '0 auto 16px', color: '#EF4444' }} />
-          <h2 style={{ fontFamily: "'Pixelify Sans', monospace", fontWeight: 700, fontSize: '22px', color: '#FFFFFF', marginBottom: '8px' }}>ACCESO DENEGADO</h2>
-          <p style={{ fontFamily: "'Pixelify Sans', monospace", fontSize: '15px', color: 'rgba(255,255,255,0.6)', marginBottom: '24px' }}>
+          <h2 className="font-pixel" style={{ fontWeight: 700, fontSize: '22px', color: '#FFFFFF', marginBottom: '8px' }}>ACCESO DENEGADO</h2>
+          <p style={{ fontSize: '15px', color: 'rgba(255,255,255,0.7)', marginBottom: '24px', lineHeight: '1.5' }}>
             <strong style={{ color: '#FFFFFF' }}>{user.email}</strong> no está autorizado.
           </p>
           <button 
@@ -43,9 +43,8 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ user, isAuthorized, al
               width: '100%',
               padding: '14px',
               borderRadius: '16px',
-              fontFamily: "'Pixelify Sans', monospace",
-              fontWeight: 700,
-              fontSize: '16px',
+              fontWeight: 600,
+              fontSize: '15px',
               color: '#FFFFFF',
               backgroundColor: 'rgba(255, 255, 255, 0.08)',
               border: '1px solid rgba(255, 255, 255, 0.15)',
@@ -66,14 +65,14 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ user, isAuthorized, al
 
   // Login screen
   return (
-    <div style={{ minHeight: '100vh', backgroundColor: '#0a0a0c', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '24px', fontFamily: "'Pixelify Sans', monospace" }}>
+    <div style={{ minHeight: '100vh', backgroundColor: '#0a0a0c', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '24px' }}>
       <div style={{ textAlign: 'center', maxWidth: '360px', width: '100%', padding: '36px 28px', borderRadius: '28px', backgroundColor: 'rgba(245, 158, 11, 0.06)', border: '1.5px solid rgba(245, 158, 11, 0.25)', boxShadow: '0 25px 60px rgba(0,0,0,0.9)' }}>
         <div style={{ width: '64px', height: '64px', borderRadius: '20px', backgroundColor: 'rgba(245, 158, 11, 0.15)', border: '1px solid rgba(245, 158, 11, 0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px', color: '#F59E0B' }}>
           <Package size={36} />
         </div>
         
-        <h1 style={{ fontFamily: "'Pixelify Sans', monospace", fontWeight: 700, fontSize: '28px', color: '#F59E0B', margin: '0 0 4px', letterSpacing: '0.04em' }}>LA CAJA</h1>
-        <p style={{ fontFamily: "'Pixelify Sans', monospace", fontSize: '15px', color: 'rgba(255,255,255,0.5)', margin: '0 0 32px' }}>Gastos compartidos en frascos</p>
+        <h1 className="font-pixel" style={{ fontWeight: 700, fontSize: '28px', color: '#F59E0B', margin: '0 0 6px', letterSpacing: '0.04em' }}>LA CAJA</h1>
+        <p style={{ fontSize: '15px', color: 'rgba(255,255,255,0.65)', margin: '0 0 32px', fontWeight: 500 }}>Gastos compartidos en frascos</p>
 
         {loginError && (
           <p style={{ color: '#F87171', fontSize: '14px', marginBottom: '16px', backgroundColor: 'rgba(153, 27, 27, 0.4)', padding: '10px', borderRadius: '12px' }}>{loginError}</p>
@@ -86,7 +85,6 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ user, isAuthorized, al
             width: '100%',
             height: '52px',
             borderRadius: '16px',
-            fontFamily: "'Pixelify Sans', monospace",
             fontWeight: 700,
             fontSize: '16px',
             color: '#000000',

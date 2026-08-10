@@ -47,20 +47,20 @@ export const CardboardBox: React.FC<CardboardBoxProps> = ({
       >
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', marginBottom: '8px', color: '#FBBF24' }}>
           <Wallet size={18} />
-          <span style={{ fontFamily: "'Pixelify Sans', monospace", fontSize: '15px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em', color: '#FBBF24' }}>
+          <span className="font-pixel" style={{ fontSize: '15px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em', color: '#FBBF24' }}>
             DINERO DISPONIBLE EN LOS FRASCOS
           </span>
           <Sparkles size={16} style={{ color: '#FBBF24' }} />
         </div>
 
-        <p style={{ fontFamily: "'Pixelify Sans', monospace", fontWeight: 700, fontSize: '36px', color: '#FDE047', margin: '6px 0', textShadow: '0 2px 12px rgba(245,158,11,0.3)' }}>
+        <p className="font-arcade" style={{ fontWeight: 700, fontSize: '42px', color: '#FDE047', margin: '4px 0', textShadow: '0 2px 14px rgba(245,158,11,0.4)', letterSpacing: '0.04em' }}>
           {fmt(totalRemaining)}
         </p>
 
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px', fontSize: '14px', fontFamily: "'Pixelify Sans', monospace", color: 'rgba(255,255,255,0.6)', marginTop: '12px', paddingTop: '10px', borderTop: '1px solid rgba(255,255,255,0.08)' }}>
-          <span>Presupuesto: <strong style={{ color: '#FFFFFF' }}>{fmt(totalBudget)}</strong></span>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px', fontSize: '13px', fontFamily: 'var(--font-sans)', fontWeight: 500, color: 'rgba(255,255,255,0.7)', marginTop: '10px', paddingTop: '10px', borderTop: '1px solid rgba(255,255,255,0.08)' }}>
+          <span>Presupuesto: <strong style={{ color: '#FFFFFF', fontWeight: 700 }}>{fmt(totalBudget)}</strong></span>
           <span>•</span>
-          <span>Gastado: <strong style={{ color: '#F87171' }}>{fmt(totalSpent)}</strong></span>
+          <span>Gastado: <strong style={{ color: '#F87171', fontWeight: 700 }}>{fmt(totalSpent)}</strong></span>
         </div>
       </div>
 

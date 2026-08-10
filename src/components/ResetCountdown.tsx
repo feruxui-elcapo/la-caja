@@ -26,24 +26,25 @@ export const ResetCountdown: React.FC = () => {
 
   return (
     <div style={{ textAlign: 'center', marginBottom: '28px' }}>
-      <p style={{ fontFamily: "'Pixelify Sans', monospace", fontSize: '14px', color: 'rgba(255,255,255,0.6)', marginBottom: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
-        <Clock size={15} style={{ color: '#F59E0B' }} />
+      <p style={{ fontSize: '14px', fontWeight: 500, color: 'rgba(255,255,255,0.7)', marginBottom: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
+        <Clock size={16} style={{ color: '#F59E0B' }} />
         <span>Renovación el 1° de cada mes en:</span>
       </p>
       <div 
+        className="font-arcade"
         style={{
           display: 'inline-flex',
           alignItems: 'center',
           gap: '8px',
-          fontFamily: "'Pixelify Sans', monospace",
-          fontSize: '16px',
+          fontSize: '22px',
           fontWeight: 700,
           color: '#FDE047',
           backgroundColor: 'rgba(245, 158, 11, 0.12)',
           border: '1px solid rgba(245, 158, 11, 0.3)',
-          padding: '8px 20px',
+          padding: '6px 20px',
           borderRadius: '24px',
-          boxShadow: '0 0 15px rgba(245, 158, 11, 0.15)'
+          boxShadow: '0 0 15px rgba(245, 158, 11, 0.15)',
+          letterSpacing: '0.06em'
         }}
       >
         <span>{timeLeft.days}d</span>

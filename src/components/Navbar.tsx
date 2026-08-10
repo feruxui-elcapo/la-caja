@@ -37,8 +37,8 @@ export const Navbar: React.FC<NavbarProps> = ({
       <div className="max-w-3xl mx-auto px-4 py-3 flex items-center justify-between">
         {/* Logo */}
         <div className="flex items-center gap-2">
-          <Package size={20} className="text-amber-400" />
-          <span className="font-pixel text-[0.6rem] text-amber-200">LA CAJA</span>
+          <Package size={22} className="text-amber-400" />
+          <span className="font-pixel text-lg font-bold text-amber-300 tracking-wider">LA CAJA</span>
         </div>
 
         {/* Actions */}
@@ -51,7 +51,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           <button onClick={() => { soundFX.playClick(); onOpenHistory(); }} className="p-2 text-white/50 hover:text-white hover:bg-white/5 rounded-lg relative" title="Historial">
             <History size={16} />
             {totalExpensesCount > 0 && (
-              <span className="absolute -top-0.5 -right-0.5 bg-amber-500 text-black font-pixel text-[6px] w-4 h-4 flex items-center justify-center rounded-full">
+              <span className="absolute -top-1 -right-1 bg-amber-400 text-black font-arcade text-xs font-bold w-4 h-4 flex items-center justify-center rounded-full shadow">
                 {totalExpensesCount}
               </span>
             )}
