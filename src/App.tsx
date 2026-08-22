@@ -16,6 +16,7 @@ import { ResetCountdown } from './components/ResetCountdown';
 import { CardboardBox } from './components/CardboardBox';
 import { AddExpenseModal } from './components/AddExpenseModal';
 import { EditExpenseModal } from './components/EditExpenseModal';
+import { ExportExpensesModal } from './components/ExportExpensesModal';
 import { 
   Home, 
   History, 
@@ -26,7 +27,8 @@ import {
   LogOut, 
   CheckCircle2, 
   Search,
-  Download
+  Download,
+  Share2
 } from 'lucide-react';
 import { soundFX } from './utils/audio';
 
@@ -44,6 +46,7 @@ export const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState<Tab>('home');
   const [isAddExpenseOpen, setIsAddExpenseOpen] = useState(false);
   const [editingExpense, setEditingExpense] = useState<Expense | null>(null);
+  const [isExportModalOpen, setIsExportModalOpen] = useState(false);
   const [preselectedJarId, setPreselectedJarId] = useState<string | undefined>(undefined);
 
   // Profile Form state
@@ -196,12 +199,38 @@ export const App: React.FC = () => {
           </div>
         )}
 
-        {/* TAB 2: HISTORIAL DE GASTOS */}
+        {/* TAB 2: HISTORIAL */}
         {activeTab === 'history' && (
           <div>
-            <h2 className="font-pixel" style={{ fontWeight: 700, fontSize: '24px', color: '#F59E0B', marginBottom: '20px', textAlign: 'center', letterSpacing: '0.04em' }}>
-              Historial de Gastos
-            </h2>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px' }}>
+              <h2 className="font-pixel" style={{ fontWeight: 700, fontSize: '24px', color: '#F59E0B', margin: 0, letterSpacing: '0.04em' }}>
+                Historial
+              </h2>
+              <button
+                onClick={() => {
+                  soundFX.playClick();
+                  setIsExportModalOpen(true);
+                }}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  padding: '8px 14px',
+                  backgroundColor: 'rgba(245, 158, 11, 0.12)',
+                  border: '1px solid rgba(245, 158, 11, 0.35)',
+                  borderRadius: '12px',
+                  color: '#FBBF24',
+                  fontSize: '13px',
+                  fontWeight: 700,
+                  cursor: 'pointer',
+                  transition: 'all 0.15s ease'
+                }}
+                title="Exportar gastos"
+              >
+                <Share2 size={15} />
+                <span>Exportar gastos</span>
+              </button>
+            </div>
 
             {/* Search Input */}
             <div style={{ position: 'relative', marginBottom: '20px' }}>
@@ -497,6 +526,13 @@ export const App: React.FC = () => {
         expense={editingExpense}
         jars={config.jars || []}
         onUpdateExpense={handleUpdateExpenseSubmit}
+      />
+
+      {/* Export Expenses Modal */}
+      <ExportExpensesModal
+        isOpen={isExportModalOpen}
+        onClose={() => setIsExportModalOpen(false)}
+        jars={config.jars || []}
       />
     </div>
   );
