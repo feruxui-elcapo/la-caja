@@ -92,13 +92,62 @@ class SoundFX {
       osc.frequency.setValueAtTime(800, now + 0.03);
 
       gain.gain.setValueAtTime(0.1, now);
-      gain.gain.linearRampToValueAtTime(0.01, now + 0.05);
-
-      osc.connect(gain);
-      gain.connect(this.ctx.destination);
-
       osc.start(now);
       osc.stop(now + 0.05);
+    } catch (e) {
+      console.warn('Audio play error:', e);
+    }
+  }
+
+  // 8-bit Glass Break / Crash sound for negative budget
+  playGlassBreak() {
+    try {
+      this.init();
+      if (!this.ctx) return;
+
+      const now = this.ctx.currentTime;
+      // White noise burst for glass shattering crunch
+      const bufferSize = this.ctx.sampleRate * 0.25;
+      const buffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
+      const output = buffer.getChannelData(0);
+      for (let i = 0; i < bufferSize; i++) {
+        output[i] = Math.random() * 2 - 1;
+      }
+
+      const whiteNoise = this.ctx.createBufferSource();
+      whiteNoise.buffer = buffer;
+
+      const filter = this.ctx.createBiquadFilter();
+      filter.type = 'highpass';
+      filter.frequency.setValueAtTime(800, now);
+      filter.frequency.linearRampToValueAtTime(300, now + 0.25);
+
+      const noiseGain = this.ctx.createGain();
+      noiseGain.gain.setValueAtTime(0.2, now);
+      noiseGain.gain.exponentialRampToValueAtTime(0.01, now + 0.25);
+
+      whiteNoise.connect(filter);
+      filter.connect(noiseGain);
+      noiseGain.connect(this.ctx.destination);
+
+      whiteNoise.start(now);
+      whiteNoise.stop(now + 0.25);
+
+      // Low crunch tone
+      const osc = this.ctx.createOscillator();
+      const oscGain = this.ctx.createGain();
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(220, now);
+      osc.frequency.exponentialRampToValueAtTime(55, now + 0.2);
+
+      oscGain.gain.setValueAtTime(0.18, now);
+      oscGain.gain.linearRampToValueAtTime(0.01, now + 0.2);
+
+      osc.connect(oscGain);
+      oscGain.connect(this.ctx.destination);
+
+      osc.start(now);
+      osc.stop(now + 0.2);
     } catch (e) {
       console.warn('Audio play error:', e);
     }
